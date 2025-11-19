@@ -1,6 +1,9 @@
 plugins {
+	// Java 프로젝트
 	id 'java'
+	// Spring Boot 플러그인
 	id 'org.springframework.boot' version '3.5.7'
+	// Spring 의존성 버전 관리
 	id 'io.spring.dependency-management' version '1.1.7'
 }
 
@@ -10,37 +13,51 @@ description = 'Demo project for Spring Boot'
 
 java {
 	toolchain {
+		// 사용할 JDK 버전
 		languageVersion = JavaLanguageVersion.of(17)
 	}
 }
 
 configurations {
 	compileOnly {
+		// compileOnly 에 annotationProcessor 설정 상속
 		extendsFrom annotationProcessor
 	}
 }
 
 repositories {
+	// 라이브러리 저장소
 	mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	// ===== Spring Boot =====
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	// ===== 데이터베이스 / 캐시 =====
 	runtimeOnly 'com.mysql:mysql-connector-j'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+	// ===== WebSocket =====
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
+	// ===== JWT =====
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+	// ===== Lombok =====
+	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+
+	// ===== 테스트 의존성 =====
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-    implementation 'org.springframework.boot:spring-boot-starter-websocket'
-
-    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
-    implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
-    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 }
 
 tasks.named('test') {
