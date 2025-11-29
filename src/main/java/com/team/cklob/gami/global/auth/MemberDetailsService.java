@@ -1,6 +1,6 @@
 package com.team.cklob.gami.global.auth;
 
-import com.team.cklob.gami.domain.member.exception.NotFoundMemberDetail;
+import com.team.cklob.gami.domain.member.exception.NotFoundMemberDetailException;
 import com.team.cklob.gami.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,6 +17,6 @@ public class MemberDetailsService implements UserDetailsService {
     public MemberDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return memberRepository.findByEmail(email)
                 .map(MemberDetails::new)
-                .orElseThrow(NotFoundMemberDetail::new);
+                .orElseThrow(NotFoundMemberDetailException::new);
     }
 }
