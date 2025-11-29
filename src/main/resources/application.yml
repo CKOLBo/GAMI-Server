@@ -1,0 +1,29 @@
+server:
+  port: ${SERVER_PORT:8080}
+
+spring:
+  application:
+    name: ${SPRING_APP_NAME:gami}
+
+  datasource:
+    driver-class-name: ${DB_DRIVER_CLASS:com.mysql.cj.jdbc.Driver}
+    url: jdbc:${RDB_TYPE:mysql}://${RDB_HOST:localhost}:${RDB_PORT:3306}/${RDB_SCHEMA:gami}?serverTimezone=${DB_TIMEZONE:Asia/Seoul}&characterEncoding=${DB_ENCODING:UTF-8}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:1234}
+
+  jpa:
+    hibernate:
+      ddl-auto: ${DB_DDL_AUTO:update}
+    properties:
+      hibernate:
+        format_sql: true
+      show-sql: true
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
+jwt:
+  accessSecret: ${JWT_ACCESS_SECRET:qXWbwKO97FDyg8AdNGh5SakyMHgdEdyfUZi3WPxKZ/c=}
+  refreshSecret: ${JWT_REFRESH_SECRET:bddf2bea2033a184add4770ca6fe8957de4e175f2a295658d3dca73a458573c6}
