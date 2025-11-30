@@ -37,18 +37,7 @@ public class ChangePasswordServiceImpl implements ChangePasswordService {
         Member member = memberRepository.findByEmail(request.email())
                 .orElseThrow(NotFoundMemberException::new);
 
-        String key = EMAIL_AUTH_PREFIX +  request.email();
-
-        if (!redisUtil.hasKey(key)) {
-            throw new NotFoundVerifyCodeException();
-        }
-
-        if (!redisUtil.getValue(key).equals(request.code())) {
-            throw new NotMatchedCodeException();
-        }
-
         member.changePassword(passwordEncoder.encode(request.newPassword()));
-        redisUtil.deleteValue(key);
         redisUtil.deleteValue(verifyKey);
     }
 }
