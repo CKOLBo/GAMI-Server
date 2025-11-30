@@ -56,7 +56,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth
                                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-                                .requestMatchers("/**").permitAll()
 
                                 //auth
                                 .requestMatchers(HttpMethod.POST, "/api/auth/signup").permitAll()
