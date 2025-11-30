@@ -48,7 +48,7 @@ public class SendCodeServiceImpl implements SendCodeService {
         String key = EMAIL_AUTH_PREFIX +  request.email();
         String limitKey = RATE_LIMIT_PREFIX +  request.email();
 
-        if (redisUtil.hasKey(key)) {
+        if (redisUtil.hasKey(limitKey)) {
             throw new TooManyRequestsException();
         }
 
