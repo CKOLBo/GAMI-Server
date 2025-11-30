@@ -36,7 +36,6 @@ public class RedisUtil {
     }
 
     public void setBlackList(String key, Object value, Long milliSeconds) {
-        redisBlackListTemplate.setValueSerializer(new Jackson2JsonRedisSerializer(value.getClass()));
         redisBlackListTemplate.opsForValue().set(key, value, milliSeconds, TimeUnit.MILLISECONDS);
     }
 
