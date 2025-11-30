@@ -24,10 +24,16 @@ public class ChangePasswordServiceImpl implements ChangePasswordService {
     private final RedisUtil redisUtil;
 
     private static final String EMAIL_AUTH_PREFIX = "auth:email:";
+    private static final String VERIFY_TIME_PREFIX = "auth:verify:time:";
 
     @Override
     @Transactional
     public void execute(ChangePasswordRequest request) {
+        String verifyKey = VERIFY_TIME_PREFIX + request.email();
+        if (!redisUtil.hasKey(verifyKey)) {
+            throw new NotFoundVerifyCodeException();
+        }
+
         Member member = memberRepository.findByEmail(request.email())
                 .orElseThrow(NotFoundMemberException::new);
 
@@ -42,5 +48,7 @@ public class ChangePasswordServiceImpl implements ChangePasswordService {
         }
 
         member.changePassword(passwordEncoder.encode(request.newPassword()));
+        redisUtil.deleteValue(key);
+        redisUtil.deleteValue(verifyKey);
     }
 }
