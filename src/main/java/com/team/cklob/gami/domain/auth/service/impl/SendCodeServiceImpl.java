@@ -18,8 +18,6 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import java.util.Random;
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -81,7 +79,7 @@ public class SendCodeServiceImpl implements SendCodeService {
     private String createVerificationCode() {
 
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        Random random = new Random();
+        java.security.SecureRandom random = new java.security.SecureRandom();
 
         return random.ints(6, 0, characters.length())
                 .mapToObj(characters::charAt)
