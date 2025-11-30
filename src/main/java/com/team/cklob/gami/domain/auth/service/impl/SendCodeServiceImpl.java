@@ -38,15 +38,13 @@ public class SendCodeServiceImpl implements SendCodeService {
 
     @Override
     @Transactional
-    public void execute(SendCodeRequest request) throws MessagingException {
+    public void execute(SendCodeRequest request) {
 
         if (request.verificationType() == VerificationType.SIGN_UP) {
             validateDuplicateEmail(request.email());
         }
 
         String code = createVerificationCode();
-        MimeMessage message = createMail(request.email(), code);
-
         String key = EMAIL_AUTH_PREFIX +  request.email();
         String limitKey = RATE_LIMIT_PREFIX +  request.email();
 
@@ -55,10 +53,12 @@ public class SendCodeServiceImpl implements SendCodeService {
         }
 
         try {
+            MimeMessage message = createMail(request.email(), code);
             javaMailSender.send(message);
+
             redisUtil.setCode(key, code, EXPIRE_MINUTES);
             redisUtil.pendingCode(limitKey, "1", RATE_LIMIT_TIME);
-        } catch (MailException e) {
+        } catch (MessagingException | MailException e) {
             log.error("Error sending verification code.", e);
             throw new InternalServerErrorException();
         }
