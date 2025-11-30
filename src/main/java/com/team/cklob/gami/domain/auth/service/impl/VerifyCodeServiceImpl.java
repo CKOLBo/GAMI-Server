@@ -17,6 +17,7 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
 
     private static final String EMAIL_AUTH_PREFIX = "auth:email:";
     private static final String VERIFY_TIME_PREFIX = "auth:verify:time:";
+    private static final String RATE_LIMIT_PREFIX = "email:ratelimit:";
     private static final long EXPIRE_MINUTES = 30L;
 
 
@@ -24,12 +25,13 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
     @Transactional
     public void execute(VerifyCodeRequest request) {
         String key = EMAIL_AUTH_PREFIX +  request.email();
+        String limitKey = RATE_LIMIT_PREFIX +  request.email();
 
         if (!redisUtil.hasKey(key)) {
             throw new NotFoundVerifyCodeException();
         }
 
-        if (!redisUtil.getValue(key).equals(request.code())) {
+        if (!redisUtil.getValue(limitKey).equals(request.code())) {
             throw new NotMatchedCodeException();
         }
 
