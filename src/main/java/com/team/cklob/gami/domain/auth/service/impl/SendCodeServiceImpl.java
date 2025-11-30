@@ -1,5 +1,6 @@
 package com.team.cklob.gami.domain.auth.service.impl;
 
+import com.team.cklob.gami.domain.auth.entity.constant.VerificationType;
 import com.team.cklob.gami.domain.auth.exception.EmailAlreadyExistsException;
 import com.team.cklob.gami.domain.auth.presentation.dto.request.SendCodeRequest;
 import com.team.cklob.gami.domain.auth.service.SendCodeService;
@@ -40,7 +41,10 @@ public class SendCodeServiceImpl implements SendCodeService {
     @Override
     @Transactional
     public void execute(SendCodeRequest request) throws MessagingException {
-        validateDuplicateEmail(request.email());
+
+        if (request.verificationType() == VerificationType.SIGN_UP) {
+            validateDuplicateEmail(request.email());
+        }
 
         String code = createVerificationCode();
         MimeMessage message = createMail(request.email(), code);
