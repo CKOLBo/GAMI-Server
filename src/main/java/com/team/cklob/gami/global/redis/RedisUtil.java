@@ -40,6 +40,10 @@ public class RedisUtil {
         redisBlackListTemplate.opsForValue().set(key, value, milliSeconds, TimeUnit.MILLISECONDS);
     }
 
+    public boolean deleteValue(String key) {
+        return stringRedisTemplate.delete(key);
+    }
+
     public Object getBlackList(String key) {
         return redisBlackListTemplate.opsForValue().get(key);
     }

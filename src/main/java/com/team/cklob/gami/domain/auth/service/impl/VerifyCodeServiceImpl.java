@@ -35,6 +35,8 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
             throw new NotMatchedCodeException();
         }
 
+        redisUtil.deleteValue(key);
+
         String verifyKey = VERIFY_TIME_PREFIX + request.email();
         redisUtil.setVerifyStatus(verifyKey, request.code(), EXPIRE_MINUTES);
     }
