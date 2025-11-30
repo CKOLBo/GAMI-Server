@@ -33,7 +33,7 @@ public class SendCodeServiceImpl implements SendCodeService {
     private static final long EXPIRE_MINUTES = 5L;
 
     private static final String RATE_LIMIT_PREFIX = "email:ratelimit:";
-    private static final long RATE_LIMIT_TIME = 30L;
+    private static final long RATE_LIMIT_TIME = 30000L;
 
     @Value("${spring.mail.username}")
     private String senderEmail;
