@@ -1,7 +1,7 @@
 package com.team.cklob.gami.domain.auth.service.impl;
 
 import com.team.cklob.gami.domain.auth.exception.EmailAlreadyExistsException;
-import com.team.cklob.gami.domain.auth.presentation.dto.request.SendVerificationCodeRequest;
+import com.team.cklob.gami.domain.auth.presentation.dto.request.SendCodeRequest;
 import com.team.cklob.gami.domain.auth.service.SendCodeService;
 import com.team.cklob.gami.domain.auth.exception.TooManyRequestsException;
 import com.team.cklob.gami.domain.member.repository.MemberRepository;
@@ -9,6 +9,7 @@ import com.team.cklob.gami.global.redis.RedisUtil;
 import com.team.cklob.gami.global.security.exception.InternalServerErrorException;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,11 +38,9 @@ public class SendCodeServiceImpl implements SendCodeService {
     private String senderEmail;
 
     @Override
-    public void execute(SendVerificationCodeRequest request) throws MessagingException {
-
-        if (memberRepository.findByEmail(request.email()).isPresent()) {
-            throw new EmailAlreadyExistsException();
-        }
+    @Transactional
+    public void execute(SendCodeRequest request) throws MessagingException {
+        validateDuplicateEmail(request.email());
 
         String code = createVerificationCode();
         MimeMessage message = createMail(request.email(), code);
@@ -84,5 +83,11 @@ public class SendCodeServiceImpl implements SendCodeService {
                 .mapToObj(characters::charAt)
                 .collect(StringBuilder::new, StringBuilder::append, StringBuilder::append)
                 .toString();
+    }
+
+    private void validateDuplicateEmail(String email) {
+        if (memberRepository.findByEmail(email).isPresent()) {
+            throw new EmailAlreadyExistsException();
+        }
     }
 }
