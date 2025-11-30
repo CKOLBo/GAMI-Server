@@ -4,7 +4,6 @@ import com.team.cklob.gami.domain.auth.presentation.dto.request.*;
 import com.team.cklob.gami.domain.auth.presentation.dto.responnse.TokenResponse;
 import com.team.cklob.gami.domain.auth.service.*;
 import com.team.cklob.gami.domain.auth.exception.TooManyRequestsException;
-import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +25,7 @@ public class AuthController {
     private final SignOutService signOutService;
 
     @PostMapping("/email/send-code")
-    public ResponseEntity<Void> sendCode(@RequestBody SendCodeRequest request) throws TooManyRequestsException, MessagingException {
+    public ResponseEntity<Void> sendCode(@RequestBody SendCodeRequest request) throws TooManyRequestsException {
         sendCodeService.execute(request);
         return ResponseEntity.ok().build();
     }
