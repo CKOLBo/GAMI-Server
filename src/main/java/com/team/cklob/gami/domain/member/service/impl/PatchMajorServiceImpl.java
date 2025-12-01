@@ -27,6 +27,5 @@ public class PatchMajorServiceImpl implements PatchMajorService {
                 .orElseThrow(NotFoundMemberDetailException::new);
 
         memberDetail.updateMajor(request.major());
-        memberDetailRepository.save(memberDetail);
     }
 }
