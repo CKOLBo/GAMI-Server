@@ -26,13 +26,19 @@ import org.springframework.web.cors.CorsUtils;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    private final JwtProvider jwtProvider;
+    private final TokenParser tokenParser;
+    private final ObjectMapper objectMapper;
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final JwtAuthenticationEntryPoint  jwtAuthenticationEntryPoint;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, ObjectMapper objectMapper, JwtProvider jwtProvider, TokenParser tokenParser, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint, JwtAccessDeniedHandler jwtAccessDeniedHandler) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
@@ -50,13 +56,21 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth
                                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-                                .requestMatchers("/**").permitAll()
+
+                                //auth
+                                .requestMatchers(HttpMethod.POST, "/api/auth/signup").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/auth/signin").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/auth/email/send-code").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/auth/email/verification-code").permitAll()
+                                .requestMatchers(HttpMethod.PATCH, "/api/auth/reissue").permitAll()
+                                .requestMatchers(HttpMethod.DELETE, "/api/auth/signout").authenticated()
+                                .requestMatchers(HttpMethod.PATCH, "/api/auth/password").permitAll()
+
                                 .anyRequest().denyAll()
                 )
 
                 .addFilterBefore(new ExceptionFilter(objectMapper), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new JwtFilter(jwtProvider, tokenParser), UsernamePasswordAuthenticationFilter.class);
-
 
         return http.build();
     }

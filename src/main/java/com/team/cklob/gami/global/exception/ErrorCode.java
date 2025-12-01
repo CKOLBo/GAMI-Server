@@ -19,6 +19,15 @@ public enum ErrorCode {
     NOT_FOUND_MEMBER_DETAIL(404, "회원 상세 정보를 찾을 수 없습니다."),
     NOT_FOUND_MEMBER(404, "해당 회원을 찾을 수 없습니다."),
 
+    //auth
+    UNVERIFIED_EMAIL(400, "인증되지 않은 이메일입니다."),
+    NOT_MATCHED_CODE(400, "인증 코드가 일치하지 않습니다"),
+    NOT_FOUND_USER(401, "존재하지 않는 사용자입니다."),
+    UNAUTHORIZED(401, "이메일 또는 비밀번호가 잘못되었습니다."),
+    NOT_FOUND_VERIFY_CODE(404, "만료되었거나 존재하지 않는 인증 코드입니다."),
+    TOO_MANY_REQUESTS(429, "너무 빠르게 요청하고 있습니다. 잠시 후 다시 시도해주세요."),
+    EMAIL_ALREADY_EXISTS(409, "이미 등록된 이메일입니다"),
+  
     // POST
     INVALID_POST_REQUEST(400, "게시글 요청 정보가 유효하지 않습니다."),
     NOT_FOUND_POST(404, "해당 게시글을 찾을 수 없습니다."),

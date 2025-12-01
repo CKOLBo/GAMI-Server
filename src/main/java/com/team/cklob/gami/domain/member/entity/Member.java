@@ -29,4 +29,8 @@ public class Member {
     @Column(name = "role",  nullable = false)
     @Enumerated(EnumType.STRING)
     private MemberRole role;
+
+    public void changePassword(String newPassword) {
+        this.password = newPassword;
+    }
 }

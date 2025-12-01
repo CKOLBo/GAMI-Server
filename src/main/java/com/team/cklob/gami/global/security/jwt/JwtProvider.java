@@ -1,8 +1,10 @@
 package com.team.cklob.gami.global.security.jwt;
 
 import com.team.cklob.gami.domain.member.entity.constant.MemberRole;
+import com.team.cklob.gami.global.redis.RedisUtil;
 import com.team.cklob.gami.global.security.exception.ExpiredTokenException;
 import com.team.cklob.gami.global.security.exception.InvalidTokenException;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -23,6 +25,7 @@ public class JwtProvider {
     public static final long REFRESH_TOKEN_TIME = 60L * 60 * 24 * 7;
 
     private final JwtProperties jwtProperties;
+    private final RedisUtil redisUtil;
 
     public Key getAccessKey() {
         return Keys.hmacShaKeyFor(jwtProperties.getAccessSecret().getBytes(StandardCharsets.UTF_8));
@@ -35,7 +38,7 @@ public class JwtProvider {
     public boolean validateAccessToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(getAccessKey()).build().parseClaimsJws(token);
-            return true;
+            return !redisUtil.hasKeyBlackList(token);
         } catch (ExpiredJwtException e) {
             throw new ExpiredTokenException();
         } catch (Exception e) {
@@ -46,7 +49,7 @@ public class JwtProvider {
     public boolean validateRefreshToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(getRefreshKey()).build().parseClaimsJws(token);
-            return true;
+            return !redisUtil.hasKeyBlackList(token);
         } catch (ExpiredJwtException e) {
             throw new ExpiredTokenException();
         } catch (Exception e) {
@@ -86,5 +89,23 @@ public class JwtProvider {
                 .setExpiration(expiry)
                 .signWith(getRefreshKey(), SignatureAlgorithm.HS256)
                 .compact();
+    }
+
+    public long getExpiration(String token) {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(getAccessKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+
+        return claims.getExpiration().getTime() - System.currentTimeMillis();
+    }
+
+    public long getAccessTokenTime() {
+        return ACCESS_TOKEN_TIME;
+    }
+
+    public long getRefreshTokenTime() {
+        return REFRESH_TOKEN_TIME;
     }
 }
