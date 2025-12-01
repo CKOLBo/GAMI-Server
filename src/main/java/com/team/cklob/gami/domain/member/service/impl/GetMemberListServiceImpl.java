@@ -35,6 +35,7 @@ public class GetMemberListServiceImpl implements GetMemberListService {
         return detailsPage.map(detail -> {
             Member m = detail.getMember();
             return GetMemberProfileResponse.builder()
+                    .memberId(m.getId())
                     .name(m.getName())
                     .gender(detail.getGender())
                     .generation(detail.getGeneration())
