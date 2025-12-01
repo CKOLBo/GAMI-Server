@@ -32,7 +32,12 @@ public enum ErrorCode {
     INVALID_POST_REQUEST(400, "게시글 요청 정보가 유효하지 않습니다."),
     NOT_FOUND_POST(404, "해당 게시글을 찾을 수 없습니다."),
     NOT_FOUND_POST_PAGE(404, "요청한 페이지가 존재하지 않습니다."),
-    FORBIDDEN_POST_ACCESS(403, "게시글에 대한 권한이 없습니다.");
+    FORBIDDEN_POST_ACCESS(403, "게시글에 대한 권한이 없습니다."),
+
+    // COMMENT
+    INVALID_COMMENT_REQUEST(400, "댓글 요청 정보가 유효하지 않습니다."),
+    NOT_FOUND_COMMENT(404, "해당 댓글을 찾을 수 없습니다."),
+    FORBIDDEN_COMMENT_ACCESS(403, "댓글에 대한 권한이 없습니다.");
 
     private final int status;
     private final String message;
