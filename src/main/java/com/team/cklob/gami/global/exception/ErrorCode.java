@@ -15,6 +15,7 @@ public enum ErrorCode {
     INTERNAL_SERVER_ERROR(500, "예기치 못한 서버 에러가 발생했습니다."),
 
     // MEMBER
+    NOT_MATCHED_PASSWORD(400, "비밀번호가 일치하지 않습니다"),
     INVALID_MEMBER_PRINCIPAL(401, "현재 인증된 사용자의 정보가 유효하지 않습니다."),
     NOT_FOUND_MEMBER_DETAIL(404, "회원 상세 정보를 찾을 수 없습니다."),
     NOT_FOUND_MEMBER(404, "해당 회원을 찾을 수 없습니다."),
