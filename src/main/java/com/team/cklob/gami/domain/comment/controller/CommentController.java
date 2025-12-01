@@ -14,32 +14,32 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/comment")
+@RequestMapping("/api")
 public class CommentController {
 
     private final CommentCommandService commentCommandService;
     private final CommentQueryService commentQueryService;
 
-    @PostMapping
+    @PostMapping("/post/{postId}/comment")
     public ResponseEntity<CommentResponse> createComment(
-            @RequestParam("postId") Long postId,
+            @PathVariable("postId") Long postId,
             @Valid @RequestBody CommentCreateRequest request
     ) {
         CommentResponse response = commentCommandService.createComment(postId, request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @GetMapping
+    @GetMapping("/post/{postId}/comment")
     public ResponseEntity<List<CommentResponse>> getComments(
-            @RequestParam("postId") Long postId
+            @PathVariable("postId") Long postId
     ) {
         List<CommentResponse> responses = commentQueryService.getComments(postId);
         return ResponseEntity.ok(responses);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/comment/{commentId}")
     public ResponseEntity<Void> deleteComment(
-            @PathVariable("id") Long commentId
+            @PathVariable("commentId") Long commentId
     ) {
         commentCommandService.deleteComment(commentId);
         return ResponseEntity.ok().build();
