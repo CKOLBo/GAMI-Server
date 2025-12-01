@@ -39,4 +39,8 @@ public class MemberDetail {
         this.major = major;
         this.generation = generation;
     }
+
+    public void updateMajor(Major major) {
+        this.major = major;
+    }
 }
