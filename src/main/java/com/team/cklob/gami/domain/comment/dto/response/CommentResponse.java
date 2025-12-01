@@ -10,13 +10,15 @@ import java.time.LocalDateTime;
 @Builder
 public class CommentResponse {
 
-    private Long id;
+    private Long postId;
+    private Long commentId;
     private String comment;
     private LocalDateTime createdAt;
 
     public static CommentResponse from(Comment comment) {
         return CommentResponse.builder()
-                .id(comment.getId())
+                .postId(comment.getPost().getId())
+                .commentId(comment.getId())
                 .comment(comment.getContent())
                 .createdAt(comment.getCreatedAt())
                 .build();
