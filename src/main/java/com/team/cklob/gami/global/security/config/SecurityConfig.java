@@ -66,6 +66,12 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.DELETE, "/api/auth/signout").authenticated()
                                 .requestMatchers(HttpMethod.PATCH, "/api/auth/password").permitAll()
 
+                                //member
+                                .requestMatchers(HttpMethod.GET, "/api/member/{id}").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/api/member").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/api/member/all").authenticated()
+                                .requestMatchers(HttpMethod.PATCH, "/api/member/major").authenticated()
+                                .requestMatchers(HttpMethod.PATCH, "/api/member/password").authenticated()
                                 .anyRequest().denyAll()
                 )
 
