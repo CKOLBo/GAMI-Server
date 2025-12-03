@@ -79,7 +79,6 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, "/api/mentoring/apply/received").authenticated()
                                 .requestMatchers(HttpMethod.GET, "/api/mentoring/mentor/all").authenticated()
                                 .requestMatchers(HttpMethod.GET, "/api/mentoring/random").authenticated()
-                                .requestMatchers(HttpMethod.PATCH, "/api/mentoring/apply/canceled/{id}").authenticated()
                                 .requestMatchers(HttpMethod.PATCH, "/api/mentoring/apply/{id}").authenticated()
                                 .anyRequest().denyAll()
                 )

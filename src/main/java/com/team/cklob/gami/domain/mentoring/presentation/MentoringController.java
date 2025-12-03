@@ -2,7 +2,6 @@ package com.team.cklob.gami.domain.mentoring.presentation;
 
 import com.team.cklob.gami.domain.member.entity.constant.Major;
 import com.team.cklob.gami.domain.mentoring.presentation.dto.request.ApplyStatusRequest;
-import com.team.cklob.gami.domain.mentoring.presentation.dto.request.CancelApplyRequest;
 import com.team.cklob.gami.domain.mentoring.presentation.dto.response.GetMentorResponse;
 import com.team.cklob.gami.domain.mentoring.presentation.dto.response.GetReceivedApplyResponse;
 import com.team.cklob.gami.domain.mentoring.presentation.dto.response.GetSentApplyResponse;
@@ -26,7 +25,6 @@ public class MentoringController {
     private final MentoringApplyService mentoringApplyService;
     private final GetSentApplyService getSentApplyService;
     private final GetReceivedApplyService getReceivedApplyService;
-    private final CancelApplyService cancelApplyService;
     private final GetMentorListService  getMentorListService;
     private final RandomSearchService randomSearchService;
     private final MentoringApplyStatusService mentoringApplyStatusService;
@@ -70,12 +68,6 @@ public class MentoringController {
     public ResponseEntity<GetMentorResponse> getRandomMentor() {
         GetMentorResponse response = randomSearchService.execute();
         return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
-
-    @PatchMapping("/apply/canceled/{id}")
-    public ResponseEntity<Void> cancelApply(@RequestBody CancelApplyRequest request, @PathVariable("id") Long applyId) {
-        cancelApplyService.execute(request, applyId);
-        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PatchMapping("/apply/{id}")

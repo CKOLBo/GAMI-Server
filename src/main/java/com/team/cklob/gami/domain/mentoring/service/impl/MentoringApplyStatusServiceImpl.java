@@ -27,6 +27,10 @@ public class MentoringApplyStatusServiceImpl implements MentoringApplyStatusServ
 
         apply.updateApplyStatus(request.applyStatus());
 
+        if (apply.getApplyStatus() == ApplyStatus.CANCELED || apply.getApplyStatus() == ApplyStatus.REJECTED) {
+            applyRepository.deleteById(applyId);
+        }
+
         if (apply.getApplyStatus() == ApplyStatus.ACCEPTED) {
             eventPublisher.publishEvent(new CreateChatRoomEvent(apply.getMentee().getId(), apply.getMentor().getId(), applyId));
         }
