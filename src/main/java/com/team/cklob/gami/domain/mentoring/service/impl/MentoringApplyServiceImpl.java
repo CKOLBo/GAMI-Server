@@ -51,13 +51,13 @@ public class MentoringApplyServiceImpl implements MentoringApplyService {
                 .createdAt(LocalDateTime.now())
                 .build();
 
-        applyRepository.save(apply);
+        Apply savedApply = applyRepository.save(apply);
 
         return new MentoringApplyResponse(
-                mentee.getId(),
-                mentor.getId(),
-                ApplyStatus.PENDING,
-                LocalDateTime.now()
+                savedApply.getMentee().getId(),
+                savedApply.getMentor().getId(),
+                savedApply.getApplyStatus(),
+                savedApply.getCreatedAt()
         );
     }
 }
