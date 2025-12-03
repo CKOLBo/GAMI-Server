@@ -34,7 +34,7 @@ public class ChatRoom {
     private Member mentee;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "applyId",  nullable = false)
+    @JoinColumn(name = "apply_Id",  nullable = false)
     private Apply apply;
 
     @Enumerated(EnumType.STRING)
