@@ -28,7 +28,7 @@ public class MentoringApplyStatusServiceImpl implements MentoringApplyStatusServ
         apply.updateApplyStatus(request.applyStatus());
 
         if (apply.getApplyStatus() == ApplyStatus.ACCEPTED) {
-            eventPublisher.publishEvent(new CreateChatRoomEvent(applyId, apply.getMentee().getId(), apply.getMentor().getId()));
+            eventPublisher.publishEvent(new CreateChatRoomEvent(apply.getMentee().getId(), apply.getMentor().getId(), applyId));
         }
     }
 }
