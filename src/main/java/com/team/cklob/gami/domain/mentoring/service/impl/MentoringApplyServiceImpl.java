@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -37,7 +38,7 @@ public class MentoringApplyServiceImpl implements MentoringApplyService {
             throw new SelfApplyNotAllowedException();
         }
 
-        if (!applyRepository.existsByMenteeIdAndMentorId(mentee.getId(), mentor.getId())) {
+        if (applyRepository.existsByMenteeIdAndMentorIdAndApplyStatusIn(mentee.getId(), mentor.getId(), List.of(ApplyStatus.PENDING, ApplyStatus.ACCEPTED))) {
             throw new AlreadyRegisteredMentorException();
         }
 
