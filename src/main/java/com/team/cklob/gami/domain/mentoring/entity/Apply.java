@@ -40,4 +40,8 @@ public class Apply {
     @CreatedDate
     @Column(name = "created_at",  nullable = false)
     private LocalDateTime createdAt;
+
+    public void updateApplyStatus(ApplyStatus applyStatus) {
+        this.applyStatus = applyStatus;
+    }
 }
