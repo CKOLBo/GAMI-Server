@@ -2,6 +2,7 @@ package com.team.cklob.gami.domain.chat.entity;
 
 import com.team.cklob.gami.domain.chat.entity.constant.MatchStatus;
 import com.team.cklob.gami.domain.member.entity.Member;
+import com.team.cklob.gami.domain.mentoring.entity.Apply;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,6 +32,10 @@ public class ChatRoom {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mentee_id", nullable = false)
     private Member mentee;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "applyId",  nullable = false)
+    private Apply apply;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "match_status",  nullable = false)
