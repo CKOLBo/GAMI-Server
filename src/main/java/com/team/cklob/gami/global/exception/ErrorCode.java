@@ -38,7 +38,14 @@ public enum ErrorCode {
     // COMMENT
     INVALID_COMMENT_REQUEST(400, "댓글 요청 정보가 유효하지 않습니다."),
     NOT_FOUND_COMMENT(404, "해당 댓글을 찾을 수 없습니다."),
-    FORBIDDEN_COMMENT_ACCESS(403, "댓글에 대한 권한이 없습니다.");
+    FORBIDDEN_COMMENT_ACCESS(403, "댓글에 대한 권한이 없습니다."),
+
+    // mentoring
+    RANDOM_MENTOR_NOT_FOUND(404, "조건에 맞는 멘토를 찾을 수 없습니다."),
+    ALREADY_REGISTERED_MENTOR(409, "이미 등록된 멘토입니다"),
+    APPLY_NOT_FOUND(404, "존재하지 않는 신청입니다."),
+    SELF_APPLY_NOT_ALLOWED(400, "자기 자신한테 신청을 보낼 수 없습니다.");
+
 
     private final int status;
     private final String message;

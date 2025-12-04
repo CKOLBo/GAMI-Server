@@ -29,4 +29,26 @@ public interface MemberDetailRepository extends JpaRepository<MemberDetail, Long
             @Param("generation") Integer generation,
             Pageable pageable
     );
+
+    @Query("SELECT md FROM MemberDetail md WHERE " +
+            "(:major IS NULL OR md.major = :major) AND " +
+            "(:name IS NULL OR md.member.name LIKE %:name%) AND " +
+            "(:generation IS NULL OR md.generation <= :generation)")
+    Page<MemberDetail> findAllWithFiltersIncludingSeniors(
+            @Param("major") Major major,
+            @Param("name") String name,
+            @Param("generation") Integer generation,
+            Pageable pageable
+    );
+
+    @Query(value = "SELECT * FROM member_detail md " +
+            "WHERE md.major = :major " +
+            "AND md.generation <= :generation " +
+            "ORDER BY RAND() " +
+            "LIMIT 1",
+            nativeQuery = true)
+    Optional<MemberDetail> findRandomByMajorAndGenerationLessThanEqual(
+            @Param("major") Major major,
+            @Param("generation") Integer generation
+    );
 }

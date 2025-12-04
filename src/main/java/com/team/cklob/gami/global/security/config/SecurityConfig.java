@@ -72,6 +72,14 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, "/api/member/all").authenticated()
                                 .requestMatchers(HttpMethod.PATCH, "/api/member/major").authenticated()
                                 .requestMatchers(HttpMethod.PATCH, "/api/member/password").authenticated()
+
+                                //mentoring
+                                .requestMatchers(HttpMethod.POST, "/api/mentoring/apply/{mentorId}").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/api/mentoring/apply/sent").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/api/mentoring/apply/received").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/api/mentoring/mentor/all").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/api/mentoring/random").authenticated()
+                                .requestMatchers(HttpMethod.PATCH, "/api/mentoring/apply/{id}").authenticated()
                                 .anyRequest().denyAll()
                 )
 
