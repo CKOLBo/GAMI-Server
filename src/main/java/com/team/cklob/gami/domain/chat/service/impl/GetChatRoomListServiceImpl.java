@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,13 +33,29 @@ public class GetChatRoomListServiceImpl implements GetChatRoomListService {
         List<ChatRoom> chatRoomList = chatRoomRepository
                 .findAllByMentorIdOrMenteeId(member.getId(), member.getId());
 
+        List<Long> otherMemberIds = chatRoomList.stream()
+                .map(chatRoom -> {
+                    boolean isMentee = chatRoom.getMentee().getId().equals(member.getId());
+                    return isMentee ? chatRoom.getMentor().getId() : chatRoom.getMentee().getId();
+                })
+                .toList();
+
+        Map<Long, MemberDetail> memberDetailMap = memberDetailRepository.findAllById(otherMemberIds)
+                .stream()
+                .collect(Collectors.toMap(
+                        MemberDetail::getId,
+                        detail -> detail
+                ));
+
         return chatRoomList.stream()
                 .map(chatRoom -> {
                     boolean isMentee = chatRoom.getMentee().getId().equals(member.getId());
                     Member otherMember = isMentee ? chatRoom.getMentor() : chatRoom.getMentee();
 
-                    MemberDetail otherMemberDetail = memberDetailRepository.findById(otherMember.getId())
-                            .orElseThrow(NotFoundMemberDetailException::new);
+                    MemberDetail otherMemberDetail = memberDetailMap.get(otherMember.getId());
+                    if (otherMemberDetail == null) {
+                        throw new NotFoundMemberDetailException();
+                    }
 
                     return GetChatRoomListResponse.builder()
                             .id(chatRoom.getId())
