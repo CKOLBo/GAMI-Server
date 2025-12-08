@@ -1,8 +1,9 @@
 package com.team.cklob.gami.domain.chat.service;
 
 import com.team.cklob.gami.domain.chat.presentation.request.ChatMessageRequest;
-import com.team.cklob.gami.domain.chat.presentation.response.ChatMessageResponse;
+
+import java.security.Principal;
 
 public interface ChatMessageService {
-    ChatMessageResponse execute(ChatMessageRequest request);
+    void execute(Long roomId, ChatMessageRequest request, Principal principal);
 }
