@@ -42,15 +42,6 @@ public class ChatController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/{roomId}/messages")
-    public ResponseEntity<ChatMessagePageResponse> getMessages(
-            @PathVariable Long roomId,
-            @RequestParam(required = false) Long cursor
-    ) {
-        ChatMessagePageResponse response = getChatRoomMessageService.execute(roomId, cursor);
-        return ResponseEntity.ok(response);
-    }
-
     @GetMapping("/rooms/{roomId}/messages")
     public ResponseEntity<ChatMessagePageResponse> getChatRoomMessages(
             @PathVariable Long roomId,
