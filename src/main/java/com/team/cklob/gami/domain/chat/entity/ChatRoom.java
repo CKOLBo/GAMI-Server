@@ -1,6 +1,7 @@
 package com.team.cklob.gami.domain.chat.entity;
 
 import com.team.cklob.gami.domain.chat.entity.constant.RoomStatus;
+import com.team.cklob.gami.domain.chat.exception.NotChatRoomMemberException;
 import com.team.cklob.gami.domain.member.entity.Member;
 import com.team.cklob.gami.domain.mentoring.entity.Apply;
 import jakarta.persistence.*;
@@ -78,7 +79,7 @@ public class ChatRoom {
         } else if (member.getId().equals(mentee.getId())) {
             this.menteeLeft = true;
         } else {
-            throw new IllegalArgumentException("채팅방 멤버가 아닙니다.");
+            throw new NotChatRoomMemberException();
         }
 
         if (mentorLeft && menteeLeft) {
