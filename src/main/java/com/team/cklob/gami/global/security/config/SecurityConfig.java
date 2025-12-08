@@ -73,11 +73,14 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.PATCH, "/api/member/major").authenticated()
                                 .requestMatchers(HttpMethod.PATCH, "/api/member/password").authenticated()
 
-                                // post
+                                //post
                                 .requestMatchers(HttpMethod.POST, "/api/post").authenticated()
                                 .requestMatchers(HttpMethod.PATCH, "/api/post/{postId}").authenticated()
                                 .requestMatchers(HttpMethod.DELETE, "/api/post/{postId}").authenticated()
                                 .requestMatchers(HttpMethod.GET, "/api/post", "/api/post/{postId}").permitAll()
+
+                                //health
+                                .requestMatchers(HttpMethod.GET, "/api/health").permitAll()
 
                                 //mentoring
                                 .requestMatchers(HttpMethod.POST, "/api/mentoring/apply/{mentorId}").authenticated()
