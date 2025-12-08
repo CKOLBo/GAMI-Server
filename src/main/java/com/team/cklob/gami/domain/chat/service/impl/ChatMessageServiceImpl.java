@@ -50,14 +50,6 @@ public class ChatMessageServiceImpl implements ChatMessageService {
             throw new NotFoundChatMemberException();
         }
 
-        if (!chatRoomRepository.existsByRoomIdAndMemberId(sender.getId(), roomId)) {
-            throw new NotFoundChatMemberException();
-        }
-
-        if (!chatRoomRepository.existsByRoomIdAndMemberId(sender.getId(), roomId)) {
-            throw new NotFoundChatMemberException();
-        }
-
         if (!chatRoom.isActive()) {
             throw new CannotSendMessageToEndedRoomException();
         }
