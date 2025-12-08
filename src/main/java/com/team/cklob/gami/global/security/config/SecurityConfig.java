@@ -77,7 +77,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST, "/api/post").authenticated()
                                 .requestMatchers(HttpMethod.PATCH, "/api/post/{postId}").authenticated()
                                 .requestMatchers(HttpMethod.DELETE, "/api/post/{postId}").authenticated()
-                                .requestMatchers(HttpMethod.GET, "/api/post/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/post", "/api/post/{postId}").permitAll()
 
                                 //mentoring
                                 .requestMatchers(HttpMethod.POST, "/api/mentoring/apply/{mentorId}").authenticated()
