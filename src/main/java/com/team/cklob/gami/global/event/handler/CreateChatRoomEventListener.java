@@ -14,7 +14,6 @@ public class CreateChatRoomEventListener {
 
     private final CreateChatRoomService createChatRoomService;
 
-    @Async
     @TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
     public void handleCreateChatRoomEvent(CreateChatRoomEvent event) {
         createChatRoomService.execute(event.applyId(), event.menteeId(), event.mentorId());
