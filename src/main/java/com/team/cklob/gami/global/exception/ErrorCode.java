@@ -44,8 +44,18 @@ public enum ErrorCode {
     RANDOM_MENTOR_NOT_FOUND(404, "조건에 맞는 멘토를 찾을 수 없습니다."),
     ALREADY_REGISTERED_MENTOR(409, "이미 등록된 멘토입니다"),
     APPLY_NOT_FOUND(404, "존재하지 않는 신청입니다."),
-    SELF_APPLY_NOT_ALLOWED(400, "자기 자신한테 신청을 보낼 수 없습니다.");
+    SELF_APPLY_NOT_ALLOWED(400, "자기 자신한테 신청을 보낼 수 없습니다."),
 
+    // chat
+    ALREADY_EXIST_CHAT_ROOM(400, "이미 생성된 채팅방입니다."),
+    ALREADY_LEFT_CHAT_ROOM(409, "이미 나간 채팅방입니다."),
+    NOT_CHAT_ROOM_MEMBER(403, "채팅방 멤버가 아닙니다."),
+    CANNOT_SEND_MESSAGE_TO_ENDED_ROOM(400, "종료된 채팅방에는 메시지를 보낼 수 없습니다."),
+    CANNOT_SEND_MESSAGE_AFTER_LEAVING(400, "나간 채팅방에는 메시지를 보낼 수 없습니다."),
+    ALREADY_EXIST_ACTIVE_CHAT_ROOM(409, "이미 활성화된 채팅방이 존재합니다."),
+    NOT_FOUND_CHAT_MEMBER(404, "이 채팅방에 소속되지 않았습니다."),
+    NOT_FOUND_CHAT_ROOM(404, "존재하지 않는 채팅방입니다."),
+    ALREADY_ENDED_CHAT_ROOM(409, "이미 종료된 채팅방입니다.");
 
     private final int status;
     private final String message;

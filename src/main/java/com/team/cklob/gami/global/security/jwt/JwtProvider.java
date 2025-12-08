@@ -101,6 +101,14 @@ public class JwtProvider {
         return claims.getExpiration().getTime() - System.currentTimeMillis();
     }
 
+    public String getEmail(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(getAccessKey())
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.getSubject(); // sub = email
+    }
+
     public long getAccessTokenTime() {
         return ACCESS_TOKEN_TIME;
     }
