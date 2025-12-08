@@ -5,6 +5,6 @@ import com.team.cklob.gami.global.exception.GlobalException;
 
 public class AlreadyEndedChatRoomException extends GlobalException {
     public AlreadyEndedChatRoomException() {
-        super(ErrorCode.ALREADY_EXIST_CHAT_ROOM);
+        super(ErrorCode.ALREADY_ENDED_CHAT_ROOM);
     }
 }
