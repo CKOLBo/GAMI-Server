@@ -80,6 +80,16 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, "/api/mentoring/mentor/all").authenticated()
                                 .requestMatchers(HttpMethod.GET, "/api/mentoring/random").authenticated()
                                 .requestMatchers(HttpMethod.PATCH, "/api/mentoring/apply/{id}").authenticated()
+
+                                //chat
+                                .requestMatchers(HttpMethod.GET, "/api/chat/rooms").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/api/chat/{roomId}").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/api/chat/{roomId}/messages").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/api/chat/rooms/{roomId}/messages").authenticated()
+                                .requestMatchers(HttpMethod.DELETE, "/api/chat/rooms/{roomId}/leave").authenticated()
+
+                                // WebSocket
+                                .requestMatchers("/ws/**").permitAll()
                                 .anyRequest().denyAll()
                 )
 
