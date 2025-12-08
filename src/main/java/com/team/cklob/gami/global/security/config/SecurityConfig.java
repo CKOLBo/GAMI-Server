@@ -57,7 +57,7 @@ public class SecurityConfig {
                         auth
                                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
 
-                                //auth
+                                // AUTH
                                 .requestMatchers(HttpMethod.POST, "/api/auth/signup").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/auth/signin").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/auth/email/send-code").permitAll()
@@ -66,20 +66,23 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.DELETE, "/api/auth/signout").authenticated()
                                 .requestMatchers(HttpMethod.PATCH, "/api/auth/password").permitAll()
 
-                                //member
+                                // MEMBER
                                 .requestMatchers(HttpMethod.GET, "/api/member/{id}").authenticated()
                                 .requestMatchers(HttpMethod.GET, "/api/member").authenticated()
                                 .requestMatchers(HttpMethod.GET, "/api/member/all").authenticated()
                                 .requestMatchers(HttpMethod.PATCH, "/api/member/major").authenticated()
                                 .requestMatchers(HttpMethod.PATCH, "/api/member/password").authenticated()
 
-                                // post
+                                // POST
                                 .requestMatchers(HttpMethod.POST, "/api/post").authenticated()
                                 .requestMatchers(HttpMethod.PATCH, "/api/post/{postId}").authenticated()
                                 .requestMatchers(HttpMethod.DELETE, "/api/post/{postId}").authenticated()
                                 .requestMatchers(HttpMethod.GET, "/api/post", "/api/post/{postId}").permitAll()
 
-                                //mentoring
+                                // HEALTH
+                                .requestMatchers(HttpMethod.GET, "/api/health").permitAll()
+
+                                // MENTORING
                                 .requestMatchers(HttpMethod.POST, "/api/mentoring/apply/{mentorId}").authenticated()
                                 .requestMatchers(HttpMethod.GET, "/api/mentoring/apply/sent").authenticated()
                                 .requestMatchers(HttpMethod.GET, "/api/mentoring/apply/received").authenticated()
@@ -87,13 +90,13 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, "/api/mentoring/random").authenticated()
                                 .requestMatchers(HttpMethod.PATCH, "/api/mentoring/apply/{id}").authenticated()
 
-                                //chat
+                                // CHAT
                                 .requestMatchers(HttpMethod.GET, "/api/chat/rooms").authenticated()
                                 .requestMatchers(HttpMethod.GET, "/api/chat/{roomId}").authenticated()
                                 .requestMatchers(HttpMethod.GET, "/api/chat/{roomId}/messages").authenticated()
                                 .requestMatchers(HttpMethod.DELETE, "/api/chat/rooms/{roomId}/leave").authenticated()
 
-                                // WebSocket
+                                // WEBSOCKET
                                 .requestMatchers("/ws/**").permitAll()
                                 .anyRequest().denyAll()
                 )
