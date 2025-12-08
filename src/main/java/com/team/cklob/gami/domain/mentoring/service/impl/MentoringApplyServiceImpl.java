@@ -1,5 +1,7 @@
 package com.team.cklob.gami.domain.mentoring.service.impl;
 
+import com.team.cklob.gami.domain.chat.exception.AlreadyExistChatRoomException;
+import com.team.cklob.gami.domain.chat.repository.ChatRoomRepository;
 import com.team.cklob.gami.domain.member.entity.Member;
 import com.team.cklob.gami.domain.member.exception.NotFoundMemberException;
 import com.team.cklob.gami.domain.member.repository.MemberRepository;
@@ -25,6 +27,7 @@ public class MentoringApplyServiceImpl implements MentoringApplyService {
     private final MemberUtil memberUtil;
     private final MemberRepository memberRepository;
     private final ApplyRepository applyRepository;
+    private final ChatRoomRepository chatRoomRepository;
 
     @Override
     @Transactional
@@ -42,7 +45,9 @@ public class MentoringApplyServiceImpl implements MentoringApplyService {
             throw new AlreadyRegisteredMentorException();
         }
 
-        // 생생된 채팅 예외도 추가
+        if (chatRoomRepository.existsByMenteeIdAndMentorId(mentee.getId(), mentorId)) {
+            throw new AlreadyExistChatRoomException();
+        }
 
         Apply apply = Apply.builder()
                 .mentee(mentee)
