@@ -41,10 +41,6 @@ public class GetChatRoomMessageServiceImpl implements GetChatRoomMessageService 
             throw new NotFoundChatMemberException();
         }
 
-        if (!chatRoom.isMember(currentMember)) {
-            throw new NotChatRoomMemberException();
-        }
-
         List<ChatMessage> messages;
 
         if (cursorId == null) {
