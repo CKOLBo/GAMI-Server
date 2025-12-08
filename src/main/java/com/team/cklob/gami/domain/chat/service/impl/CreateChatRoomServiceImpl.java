@@ -1,7 +1,7 @@
 package com.team.cklob.gami.domain.chat.service.impl;
 
 import com.team.cklob.gami.domain.chat.entity.ChatRoom;
-import com.team.cklob.gami.domain.chat.entity.constant.MatchStatus;
+import com.team.cklob.gami.domain.chat.entity.constant.RoomStatus;
 import com.team.cklob.gami.domain.chat.exception.AlreadyExistChatRoomException;
 import com.team.cklob.gami.domain.chat.repository.ChatRoomRepository;
 import com.team.cklob.gami.domain.chat.service.CreateChatRoomService;
@@ -45,7 +45,7 @@ public class CreateChatRoomServiceImpl implements CreateChatRoomService {
                 .apply(apply)
                 .mentor(mentor)
                 .mentee(mentee)
-                .matchStatus(MatchStatus.IN_CHAT)
+                .roomStatus(RoomStatus.ACTIVE)
                 .lastMessage("")
                 .createdAt(LocalDateTime.now())
                 .build();
