@@ -2,7 +2,7 @@ package com.team.cklob.gami.domain.chat.repository;
 
 import com.team.cklob.gami.domain.chat.entity.ChatRoom;
 import com.team.cklob.gami.domain.member.entity.MemberDetail;
-import io.lettuce.core.dynamic.annotation.Param;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
