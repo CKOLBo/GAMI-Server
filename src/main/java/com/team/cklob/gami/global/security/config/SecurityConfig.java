@@ -84,7 +84,7 @@ public class SecurityConfig {
                                 //chat
                                 .requestMatchers(HttpMethod.GET, "/api/chat/rooms").authenticated()
                                 .requestMatchers(HttpMethod.GET, "/api/chat/{roomId}").authenticated()
-                                .requestMatchers(HttpMethod.GET, "/api/chat/rooms/{roomId}/messages").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/api/chat/{roomId}/messages").authenticated()
                                 .requestMatchers(HttpMethod.DELETE, "/api/chat/rooms/{roomId}/leave").authenticated()
 
                                 // WebSocket

@@ -42,7 +42,7 @@ public class ChatController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/rooms/{roomId}/messages")
+    @GetMapping("/{roomId}/messages")
     public ResponseEntity<ChatMessagePageResponse> getChatRoomMessages(
             @PathVariable Long roomId,
             @RequestParam(required = false) Long cursor
