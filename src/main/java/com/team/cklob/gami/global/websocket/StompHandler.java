@@ -1,6 +1,5 @@
 package com.team.cklob.gami.global.websocket;
 
-import com.team.cklob.gami.global.security.exception.InvalidTokenException;
 import com.team.cklob.gami.global.security.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.Message;
@@ -22,37 +21,23 @@ public class StompHandler implements ChannelInterceptor {
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
 
         if (StompCommand.CONNECT.equals(accessor.getCommand())) {
-            String token = accessor.getFirstNativeHeader("Authorization");
-
-            if (token == null) {
-                throw new InvalidTokenException();
-            }
-
-            if (token.startsWith("Bearer ")) {
-                token = token.substring(7);
-            }
-
-            if (!jwtProvider.validateAccessToken(token)) {
-                throw new InvalidTokenException();
-            }
-
-            String email = jwtProvider.getEmail(token);
-            accessor.setUser(new StompPrincipal(email));
+            authenticateStompUser(accessor);
         }
 
         if (StompCommand.SEND.equals(accessor.getCommand())) {
-            String token = accessor.getFirstNativeHeader("Authorization");
-            if (token != null && token.startsWith("Bearer ")) {
-                token = token.substring(7);
-                if (jwtProvider.validateAccessToken(token)) {
-                    String email = jwtProvider.getEmail(token);
-                    StompPrincipal principal = new StompPrincipal(email);
-                    accessor.setUser(principal);
-                }
-            }
+            authenticateStompUser(accessor);
         }
 
         return MessageBuilder.createMessage(message.getPayload(), accessor.getMessageHeaders());
+    }
+
+    private void authenticateStompUser(StompHeaderAccessor accessor) {
+        String token = accessor.getFirstNativeHeader("Authorization");
+        if (token != null && token.startsWith("Bearer ")) {
+            token = token.substring(7);
+            String email = jwtProvider.getEmail(token);
+            accessor.setUser(new StompPrincipal(email));
+        }
     }
 }
 
