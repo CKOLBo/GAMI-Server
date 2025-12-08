@@ -8,6 +8,7 @@ import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -17,13 +18,41 @@ public class StompHandler implements ChannelInterceptor {
     private final JwtProvider jwtProvider;
 
     @Override
-    public void postSend(Message<?> message, MessageChannel channel, boolean sent) {
+    public Message<?> preSend(Message<?> message, MessageChannel channel) {
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
-        if (accessor.getCommand() == StompCommand.CONNECT) {
-            if (!jwtProvider.validateAccessToken(accessor.getFirstNativeHeader("Authorization"))) {
+
+        if (StompCommand.CONNECT.equals(accessor.getCommand())) {
+            String token = accessor.getFirstNativeHeader("Authorization");
+
+            if (token == null) {
                 throw new InvalidTokenException();
             }
+
+            if (token.startsWith("Bearer ")) {
+                token = token.substring(7);
+            }
+
+            if (!jwtProvider.validateAccessToken(token)) {
+                throw new InvalidTokenException();
+            }
+
+            String email = jwtProvider.getEmail(token);
+            accessor.setUser(new StompPrincipal(email));
         }
-        ChannelInterceptor.super.postSend(message, channel, sent);
+
+        if (StompCommand.SEND.equals(accessor.getCommand())) {
+            String token = accessor.getFirstNativeHeader("Authorization");
+            if (token != null && token.startsWith("Bearer ")) {
+                token = token.substring(7);
+                if (jwtProvider.validateAccessToken(token)) {
+                    String email = jwtProvider.getEmail(token);
+                    StompPrincipal principal = new StompPrincipal(email);
+                    accessor.setUser(principal);
+                }
+            }
+        }
+
+        return MessageBuilder.createMessage(message.getPayload(), accessor.getMessageHeaders());
     }
 }
+
