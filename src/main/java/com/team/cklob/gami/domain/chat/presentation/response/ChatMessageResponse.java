@@ -11,7 +11,7 @@ public record ChatMessageResponse(
         Long senderId,
         String senderName
 ) {
-    public static ChatMessageResponse from(ChatMessage message, Long currentUserId) {
+    public static ChatMessageResponse from(ChatMessage message) {
         return new ChatMessageResponse(
                 message.getId(),
                 message.getMessage(),
