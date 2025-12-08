@@ -1,5 +1,6 @@
 package com.team.cklob.gami.global.websocket;
 
+import com.team.cklob.gami.global.security.exception.InvalidTokenException;
 import com.team.cklob.gami.global.security.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.Message;
@@ -33,10 +34,17 @@ public class StompHandler implements ChannelInterceptor {
 
     private void authenticateStompUser(StompHeaderAccessor accessor) {
         String token = accessor.getFirstNativeHeader("Authorization");
+
+        if (!jwtProvider.validateAccessToken(token)) {
+            throw new InvalidTokenException();
+        }
+
         if (token != null && token.startsWith("Bearer ")) {
             token = token.substring(7);
             String email = jwtProvider.getEmail(token);
             accessor.setUser(new StompPrincipal(email));
+        } else {
+            throw new InvalidTokenException();
         }
     }
 }
