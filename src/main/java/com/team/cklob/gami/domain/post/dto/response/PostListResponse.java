@@ -24,7 +24,7 @@ public class PostListResponse {
 
     private LocalDateTime createdAt;
 
-    private LocalDateTime updateAt;
+    private LocalDateTime updatedAt;
 
     public static PostListResponse from(Post post) {
         return PostListResponse.builder()
@@ -32,7 +32,7 @@ public class PostListResponse {
                 .noName(post.getMember().getName())
                 .title(post.getTitle())
                 .createdAt(post.getCreatedAt())
-                .updateAt(post.getUpdateAt())
+                .updatedAt(post.getUpdatedAt())
                 .build();
     }
 }
