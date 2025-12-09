@@ -58,6 +58,7 @@ public class MentoringApplyServiceImpl implements MentoringApplyService {
         Apply savedApply = applyRepository.save(apply);
 
         return new MentoringApplyResponse(
+                savedApply.getId(),
                 savedApply.getMentee().getId(),
                 savedApply.getMentor().getId(),
                 savedApply.getApplyStatus(),
