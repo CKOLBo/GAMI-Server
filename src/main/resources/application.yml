@@ -16,8 +16,9 @@ spring:
       ddl-auto: ${DB_DDL_AUTO:update}
     properties:
       hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect
         format_sql: true
-      show-sql: true
+    show-sql: true
 
   data:
     redis:
@@ -29,7 +30,6 @@ spring:
     port: 587
     username: ${MAIL_USERNAME:hamin090403@gmail.com}
     password: ${MAIL_PASSWORD:fpkmypdxzazseekp}
-
     properties:
       mail:
         smtp:
