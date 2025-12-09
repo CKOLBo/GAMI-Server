@@ -47,7 +47,6 @@ public class CreateChatRoomServiceImpl implements CreateChatRoomService {
                 .mentee(mentee)
                 .roomStatus(RoomStatus.ACTIVE)
                 .lastMessage("")
-                .createdAt(LocalDateTime.now())
                 .build();
         chatRoomRepository.save(chatRoom);
     }
