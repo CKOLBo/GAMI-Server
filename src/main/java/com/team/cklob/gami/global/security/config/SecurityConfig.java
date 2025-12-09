@@ -79,6 +79,9 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.DELETE, "/api/post/{postId}").authenticated()
                                 .requestMatchers(HttpMethod.GET, "/api/post", "/api/post/{postId}").permitAll()
 
+                                // REPORT
+                                .requestMatchers(HttpMethod.POST, "/api/report").authenticated()
+
                                 // HEALTH
                                 .requestMatchers(HttpMethod.GET, "/api/health").permitAll()
 
