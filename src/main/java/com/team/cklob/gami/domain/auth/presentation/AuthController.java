@@ -61,7 +61,7 @@ public class AuthController {
     }
 
     @DeleteMapping("/signout")
-    public ResponseEntity<Void> signout(HttpServletRequest request) {
+    public ResponseEntity<Void> signOut(HttpServletRequest request) {
         String accessToken = request.getHeader("Authorization").substring(7);
         signOutService.execute(accessToken);
         return ResponseEntity.noContent().build();
