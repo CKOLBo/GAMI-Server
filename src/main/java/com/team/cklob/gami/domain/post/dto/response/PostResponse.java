@@ -16,7 +16,7 @@ public class PostResponse {
     private int likeCount;
     private Long memberId;
     private LocalDateTime createdAt;
-    private LocalDateTime updateAt;
+    private LocalDateTime updatedAt;
 
     public static PostResponse from(Post post) {
         return PostResponse.builder()
@@ -26,7 +26,7 @@ public class PostResponse {
                 .likeCount(post.getLikeCount())
                 .memberId(post.getMember().getId())
                 .createdAt(post.getCreatedAt())
-                .updateAt(post.getUpdateAt())
+                .updatedAt(post.getUpdatedAt())
                 .build();
     }
 }
