@@ -47,3 +47,6 @@ spring:
 jwt:
   accessSecret: ${JWT_ACCESS_SECRET:qXWbwKO97FDyg8AdNGh5SakyMHgdEdyfUZi3WPxKZ/c=}
   refreshSecret: ${JWT_REFRESH_SECRET:bddf2bea2033a184add4770ca6fe8957de4e175f2a295658d3dca73a458573c6}
+
+discord:
+  webhook-url: ${DISCORD_WEBHOOK_URL:https://discord.com/api/webhooks/1447956961822900274/dLeZY71KmqlLDghY9pcLnuCH_u3OMoSmrRcnrw0k2J9NIg-9h1HQdIrxQW5hRS0Ga21y}

@@ -1,13 +1,17 @@
 package com.team.cklob.gami.global.security.jwt;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties("jwt")
-@AllArgsConstructor
 @Getter
+@ConfigurationProperties(prefix = "jwt")
 public class JwtProperties {
-    private String accessSecret;
-    private String refreshSecret;
+
+    private final String accessSecret;
+    private final String refreshSecret;
+
+    public JwtProperties(String accessSecret, String refreshSecret) {
+        this.accessSecret = accessSecret;
+        this.refreshSecret = refreshSecret;
+    }
 }
