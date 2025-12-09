@@ -18,8 +18,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -61,8 +59,7 @@ public class ReportServiceImpl implements ReportService {
                 .reportType(reportType)
                 .result(ReportResult.PENDING)
                 .action(ReportAction.NONE)
-                .reportAt(LocalDateTime.now())
-                .build();
+                .build(); // reportAt은 Auditing이 자동 처리
 
         Report saved = reportRepository.save(report);
 
