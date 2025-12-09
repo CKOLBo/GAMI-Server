@@ -54,6 +54,6 @@ public class Report {
     private String reason;
 
     @CreatedDate
-    @Column(name = "report_at", updatable = false)
+    @Column(name = "report_at", updatable = false, nullable = false)
     private LocalDateTime reportAt;
 }

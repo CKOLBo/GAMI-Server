@@ -40,7 +40,7 @@ public class Apply {
     private Member mentee;
 
     @CreatedDate
-    @Column(name = "created_at", updatable = false)
+    @Column(name = "created_at", updatable = false, nullable = false)
     private LocalDateTime createdAt;
 
     public void updateApplyStatus(ApplyStatus applyStatus) {

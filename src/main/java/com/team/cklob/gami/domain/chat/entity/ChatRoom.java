@@ -48,7 +48,7 @@ public class ChatRoom {
     private String lastMessage;
 
     @CreatedDate
-    @Column(name = "created_at", updatable = false)
+    @Column(name = "created_at", updatable = false, nullable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "ended_at")
