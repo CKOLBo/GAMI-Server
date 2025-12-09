@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
@@ -16,7 +17,8 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table
+@Table(name = "apply")
+@EntityListeners(AuditingEntityListener.class)
 @Builder
 public class Apply {
 
@@ -38,7 +40,7 @@ public class Apply {
     private Member mentee;
 
     @CreatedDate
-    @Column(name = "created_at",  nullable = false)
+    @Column(name = "created_at", updatable = false, nullable = false)
     private LocalDateTime createdAt;
 
     public void updateApplyStatus(ApplyStatus applyStatus) {

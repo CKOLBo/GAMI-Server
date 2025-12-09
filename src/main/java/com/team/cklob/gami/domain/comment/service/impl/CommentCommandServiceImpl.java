@@ -38,7 +38,6 @@ public class CommentCommandServiceImpl implements CommentCommandService {
                 .author(currentMember)
                 .post(post)
                 .content(request.getComment())
-                .createdAt(LocalDateTime.now())
                 .build();
 
         Comment saved = commentRepository.save(comment);

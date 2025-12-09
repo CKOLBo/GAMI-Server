@@ -31,8 +31,6 @@ public class PostCommandServiceImpl implements PostCommandService {
                 .title(request.getTitle())
                 .content(request.getContent())
                 .likeCount(0)
-                .createdAt(LocalDateTime.now())
-                .updateAt(LocalDateTime.now())
                 .build();
 
         return postRepository.save(post).getId();
@@ -49,8 +47,6 @@ public class PostCommandServiceImpl implements PostCommandService {
                 .title(request.getTitle())
                 .content(request.getContent())
                 .likeCount(post.getLikeCount())
-                .createdAt(post.getCreatedAt())
-                .updateAt(LocalDateTime.now())
                 .build();
 
         postRepository.save(updatedPost);

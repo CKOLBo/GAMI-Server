@@ -62,7 +62,6 @@ public class ChatMessageServiceImpl implements ChatMessageService {
                 .room(chatRoom)
                 .message(request.message())
                 .sender(sender)
-                .createdAt(LocalDateTime.now())
                 .build();
 
         chatMessageRepository.save(message);

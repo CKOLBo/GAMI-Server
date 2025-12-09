@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
@@ -14,6 +17,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 @Builder
 public class Post {
 
@@ -32,11 +36,13 @@ public class Post {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @Column(name = "created_at", nullable = false)
+    @CreatedDate
+    @Column(name = "created_at", updatable = false, nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "update_at", nullable = false)
-    private LocalDateTime updateAt;
+    @LastModifiedDate
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     @Column(name = "like_count", nullable = false)
     private Integer likeCount;
@@ -47,8 +53,6 @@ public class Post {
                 .member(member)
                 .title(title)
                 .content(content)
-                .createdAt(now)
-                .updateAt(now)
                 .likeCount(0)
                 .build();
     }
@@ -56,7 +60,6 @@ public class Post {
     public void update(String title, String content) {
         this.title = title;
         this.content = content;
-        this.updateAt = LocalDateTime.now();
     }
 
     public void incrementLikeCount() {

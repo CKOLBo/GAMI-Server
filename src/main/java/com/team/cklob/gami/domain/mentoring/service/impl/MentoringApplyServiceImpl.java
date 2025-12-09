@@ -53,7 +53,6 @@ public class MentoringApplyServiceImpl implements MentoringApplyService {
                 .mentee(mentee)
                 .mentor(mentor)
                 .applyStatus(ApplyStatus.PENDING)
-                .createdAt(LocalDateTime.now())
                 .build();
 
         Apply savedApply = applyRepository.save(apply);
