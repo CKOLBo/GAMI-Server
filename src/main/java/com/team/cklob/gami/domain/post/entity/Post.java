@@ -53,8 +53,6 @@ public class Post {
                 .member(member)
                 .title(title)
                 .content(content)
-                .createdAt(now)
-                .updatedAt(now)
                 .likeCount(0)
                 .build();
     }
@@ -62,7 +60,6 @@ public class Post {
     public void update(String title, String content) {
         this.title = title;
         this.content = content;
-        this.updatedAt = LocalDateTime.now();
     }
 
     public void incrementLikeCount() {
