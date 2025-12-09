@@ -11,7 +11,6 @@ import com.team.cklob.gami.domain.report.entity.constant.ReportResult;
 import com.team.cklob.gami.domain.report.entity.constant.ReportType;
 import com.team.cklob.gami.domain.report.exception.AlreadyReportedException;
 import com.team.cklob.gami.domain.report.exception.NotFoundReportTargetException;
-import com.team.cklob.gami.domain.report.exception.InvalidReportRequestException;
 import com.team.cklob.gami.domain.report.repository.ReportRepository;
 import com.team.cklob.gami.domain.report.service.ReportService;
 import com.team.cklob.gami.global.util.MemberUtil;
@@ -34,11 +33,11 @@ public class ReportServiceImpl implements ReportService {
     public ReportResponse createReport(ReportCreateRequest request) {
         Member reporter = memberUtil.getCurrentMember();
 
-        if (request.getPostId() == null || request.getReason() == null || request.getReason().isBlank()) {
-            throw new InvalidReportRequestException();
-        }
-
-        if (reportRepository.existsByReporterIdAndPostId(reporter.getId(), request.getPostId())) {
+        if (reportRepository.existsByReporterIdAndPostIdAndReportType(
+                reporter.getId(),
+                request.getPostId(),
+                request.getReportType()
+        )) {
             throw new AlreadyReportedException();
         }
 
@@ -47,12 +46,19 @@ public class ReportServiceImpl implements ReportService {
 
         Member reportedMember = post.getMember();
 
+        ReportType reportType = request.getReportType();
+
+        String reason = request.getReason();
+        if (reportType == ReportType.ETC && request.getReasonDetail() != null && !request.getReasonDetail().isBlank()) {
+            reason = request.getReasonDetail();
+        }
+
         Report report = Report.builder()
                 .reporter(reporter)
                 .reportedMember(reportedMember)
                 .post(post)
-                .reason(request.getReason())
-                .reportType(ReportType.ETC)
+                .reason(reason)
+                .reportType(reportType)
                 .result(ReportResult.PENDING)
                 .action(ReportAction.NONE)
                 .reportAt(LocalDateTime.now())
@@ -63,4 +69,3 @@ public class ReportServiceImpl implements ReportService {
         return new ReportResponse(saved.getId());
     }
 }
-
