@@ -6,10 +6,9 @@ import com.team.cklob.gami.domain.report.entity.constant.ReportAction;
 import com.team.cklob.gami.domain.report.entity.constant.ReportResult;
 import com.team.cklob.gami.domain.report.entity.constant.ReportType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
@@ -18,6 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@EntityListeners(AuditingEntityListener.class)
 @Builder
 public class Report {
 
@@ -50,9 +50,10 @@ public class Report {
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 
-    @Column(name = "reason",  nullable = false,  length = 255)
+    @Column(name = "reason",  nullable = false)
     private String reason;
 
-    @Column(name = "report_at", nullable = false)
+    @CreatedDate
+    @Column(name = "report_at", updatable = false)
     private LocalDateTime reportAt;
 }
