@@ -4,7 +4,7 @@ import com.team.cklob.gami.domain.auth.entity.RefreshToken;
 import com.team.cklob.gami.domain.auth.exception.NotFoundUserException;
 import com.team.cklob.gami.domain.auth.exception.UnauthorizedException;
 import com.team.cklob.gami.domain.auth.dto.request.SignInRequest;
-import com.team.cklob.gami.domain.auth.dto.responnse.TokenResponse;
+import com.team.cklob.gami.domain.auth.dto.response.TokenResponse;
 import com.team.cklob.gami.domain.auth.repository.RefreshTokenRepository;
 import com.team.cklob.gami.domain.auth.service.SignInService;
 import com.team.cklob.gami.domain.member.entity.Member;
