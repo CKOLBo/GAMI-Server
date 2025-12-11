@@ -1,5 +1,7 @@
 package com.team.cklob.gami.global.redis;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.team.cklob.gami.domain.chat.presentation.response.ChatMessageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -12,6 +14,7 @@ public class RedisUtil {
 
     private final RedisTemplate<String, String> stringRedisTemplate;
     private final RedisTemplate<String, Object> redisBlackListTemplate;
+    private final ObjectMapper objectMapper;
 
 
     public void setCode(String key, String value, Long milliSeconds) {
@@ -52,5 +55,15 @@ public class RedisUtil {
 
     public boolean deleteBlackList(String key) {
         return redisBlackListTemplate.delete(key);
+    }
+
+    public void appendRecentMessage(ChatMessageResponse response, String key) {
+        try {
+            String json = objectMapper.writeValueAsString(response);
+
+            stringRedisTemplate.opsForList().leftPush(key, json);
+            stringRedisTemplate.opsForList().trim(key, 0, 199);
+        } catch (Exception e) {
+        }
     }
 }

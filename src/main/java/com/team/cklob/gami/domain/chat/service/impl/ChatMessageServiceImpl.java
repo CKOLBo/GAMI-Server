@@ -14,6 +14,7 @@ import com.team.cklob.gami.domain.chat.service.ChatMessageService;
 import com.team.cklob.gami.domain.member.entity.Member;
 import com.team.cklob.gami.domain.member.exception.NotFoundMemberException;
 import com.team.cklob.gami.domain.member.repository.MemberRepository;
+import com.team.cklob.gami.global.redis.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -21,7 +22,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
-import java.time.LocalDateTime;
 
 @Service
 @Slf4j
@@ -32,6 +32,9 @@ public class ChatMessageServiceImpl implements ChatMessageService {
     private final ChatMessageRepository chatMessageRepository;
     private final MemberRepository memberRepository;
     private final SimpMessagingTemplate messagingTemplate;
+    private final RedisUtil redisUtil;
+
+    private static final String CHAT_MESSAGES_PREFIX = "CHAT:MESSAGES:";
 
     @Override
     @Transactional
@@ -67,15 +70,19 @@ public class ChatMessageServiceImpl implements ChatMessageService {
         chatMessageRepository.save(message);
         chatRoom.updateLastMessage(request.message());
 
+        ChatMessageResponse response = new ChatMessageResponse(
+                message.getId(),
+                message.getMessage(),
+                message.getCreatedAt(),
+                sender.getId(),
+                sender.getName()
+        );
+
         messagingTemplate.convertAndSend(
                 "/topic/room/" + roomId,
-                new ChatMessageResponse(
-                        message.getId(),
-                        message.getMessage(),
-                        message.getCreatedAt(),
-                        sender.getId(),
-                        sender.getName()
-                )
+                response
         );
+        String key = CHAT_MESSAGES_PREFIX + roomId;
+        redisUtil.appendRecentMessage(response, key);
     }
 }
