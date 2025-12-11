@@ -2,7 +2,7 @@ package com.team.cklob.gami.domain.auth.service.impl;
 
 import com.team.cklob.gami.domain.auth.exception.NotFoundVerifyCodeException;
 import com.team.cklob.gami.domain.auth.exception.NotMatchedCodeException;
-import com.team.cklob.gami.domain.auth.presentation.dto.request.VerifyCodeRequest;
+import com.team.cklob.gami.domain.auth.dto.request.VerifyCodeRequest;
 import com.team.cklob.gami.domain.auth.service.VerifyCodeService;
 import com.team.cklob.gami.global.redis.RedisUtil;
 import jakarta.transaction.Transactional;

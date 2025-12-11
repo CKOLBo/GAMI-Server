@@ -3,7 +3,7 @@ package com.team.cklob.gami.domain.member.service.impl;
 import com.team.cklob.gami.domain.member.entity.Member;
 import com.team.cklob.gami.domain.member.entity.MemberDetail;
 import com.team.cklob.gami.domain.member.exception.NotFoundMemberDetailException;
-import com.team.cklob.gami.domain.member.presentation.dto.response.GetMemberProfileResponse;
+import com.team.cklob.gami.domain.member.dto.response.GetMemberProfileResponse;
 import com.team.cklob.gami.domain.member.repository.MemberDetailRepository;
 import com.team.cklob.gami.domain.member.service.GetMyProfileService;
 import com.team.cklob.gami.global.util.MemberUtil;

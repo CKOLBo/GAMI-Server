@@ -3,7 +3,7 @@ package com.team.cklob.gami.domain.chat.service.impl;
 import com.team.cklob.gami.domain.chat.entity.ChatRoom;
 import com.team.cklob.gami.domain.chat.exception.NotFoundChatMemberException;
 import com.team.cklob.gami.domain.chat.exception.NotFoundChatRoomException;
-import com.team.cklob.gami.domain.chat.presentation.response.GetChatRoomResponse;
+import com.team.cklob.gami.domain.chat.dto.response.GetChatRoomResponse;
 import com.team.cklob.gami.domain.chat.repository.ChatRoomRepository;
 import com.team.cklob.gami.domain.chat.service.GetChatRoomService;
 import com.team.cklob.gami.domain.member.entity.Member;

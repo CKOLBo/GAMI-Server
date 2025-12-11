@@ -1,7 +1,7 @@
 package com.team.cklob.gami.domain.chat.service.impl;
 
 import com.team.cklob.gami.domain.chat.entity.ChatRoom;
-import com.team.cklob.gami.domain.chat.presentation.response.GetChatRoomListResponse;
+import com.team.cklob.gami.domain.chat.dto.response.GetChatRoomListResponse;
 import com.team.cklob.gami.domain.chat.repository.ChatRoomRepository;
 import com.team.cklob.gami.domain.chat.service.GetChatRoomListService;
 import com.team.cklob.gami.domain.member.entity.Member;

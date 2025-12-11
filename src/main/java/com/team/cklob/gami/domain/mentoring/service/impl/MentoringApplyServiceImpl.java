@@ -9,7 +9,7 @@ import com.team.cklob.gami.domain.mentoring.entity.Apply;
 import com.team.cklob.gami.domain.mentoring.entity.constant.ApplyStatus;
 import com.team.cklob.gami.domain.mentoring.exception.AlreadyRegisteredMentorException;
 import com.team.cklob.gami.domain.mentoring.exception.SelfApplyNotAllowedException;
-import com.team.cklob.gami.domain.mentoring.presentation.dto.response.MentoringApplyResponse;
+import com.team.cklob.gami.domain.mentoring.dto.response.MentoringApplyResponse;
 import com.team.cklob.gami.domain.mentoring.repository.ApplyRepository;
 import com.team.cklob.gami.domain.mentoring.service.MentoringApplyService;
 import com.team.cklob.gami.global.util.MemberUtil;
@@ -17,7 +17,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
