@@ -13,6 +13,7 @@ import com.team.cklob.gami.domain.chat.service.GetChatRoomMessageService;
 import com.team.cklob.gami.domain.member.entity.Member;
 import com.team.cklob.gami.global.util.MemberUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class GetChatRoomMessageServiceImpl implements GetChatRoomMessageService {
@@ -96,6 +98,7 @@ public class GetChatRoomMessageServiceImpl implements GetChatRoomMessageService 
                 }
             }
         } catch (Exception e) {
+            log.error("Failed to get messages from cache for room: {}", roomId, e);
         }
 
         List<ChatMessage> messages = chatMessageRepository.findLatestMessages(
