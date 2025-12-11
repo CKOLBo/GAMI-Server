@@ -1,11 +1,11 @@
-package com.team.cklob.gami.domain.mentoring.presentation;
+package com.team.cklob.gami.domain.mentoring.controller;
 
 import com.team.cklob.gami.domain.member.entity.constant.Major;
-import com.team.cklob.gami.domain.mentoring.presentation.dto.request.ApplyStatusRequest;
-import com.team.cklob.gami.domain.mentoring.presentation.dto.response.GetMentorResponse;
-import com.team.cklob.gami.domain.mentoring.presentation.dto.response.GetReceivedApplyResponse;
-import com.team.cklob.gami.domain.mentoring.presentation.dto.response.GetSentApplyResponse;
-import com.team.cklob.gami.domain.mentoring.presentation.dto.response.MentoringApplyResponse;
+import com.team.cklob.gami.domain.mentoring.dto.request.ApplyStatusRequest;
+import com.team.cklob.gami.domain.mentoring.dto.response.GetMentorResponse;
+import com.team.cklob.gami.domain.mentoring.dto.response.GetReceivedApplyResponse;
+import com.team.cklob.gami.domain.mentoring.dto.response.GetSentApplyResponse;
+import com.team.cklob.gami.domain.mentoring.dto.response.MentoringApplyResponse;
 import com.team.cklob.gami.domain.mentoring.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

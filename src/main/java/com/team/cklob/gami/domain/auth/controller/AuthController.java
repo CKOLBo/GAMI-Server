@@ -1,7 +1,7 @@
-package com.team.cklob.gami.domain.auth.presentation;
+package com.team.cklob.gami.domain.auth.controller;
 
-import com.team.cklob.gami.domain.auth.presentation.dto.request.*;
-import com.team.cklob.gami.domain.auth.presentation.dto.responnse.TokenResponse;
+import com.team.cklob.gami.domain.auth.dto.request.*;
+import com.team.cklob.gami.domain.auth.dto.responnse.TokenResponse;
 import com.team.cklob.gami.domain.auth.service.*;
 import com.team.cklob.gami.domain.auth.exception.TooManyRequestsException;
 import jakarta.servlet.http.HttpServletRequest;

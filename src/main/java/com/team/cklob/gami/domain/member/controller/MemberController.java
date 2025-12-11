@@ -1,9 +1,9 @@
-package com.team.cklob.gami.domain.member.presentation;
+package com.team.cklob.gami.domain.member.controller;
 
 import com.team.cklob.gami.domain.member.entity.constant.Major;
-import com.team.cklob.gami.domain.member.presentation.dto.request.ResetPasswordRequest;
-import com.team.cklob.gami.domain.member.presentation.dto.request.PatchMajorRequest;
-import com.team.cklob.gami.domain.member.presentation.dto.response.GetMemberProfileResponse;
+import com.team.cklob.gami.domain.member.dto.request.ResetPasswordRequest;
+import com.team.cklob.gami.domain.member.dto.request.PatchMajorRequest;
+import com.team.cklob.gami.domain.member.dto.response.GetMemberProfileResponse;
 import com.team.cklob.gami.domain.member.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

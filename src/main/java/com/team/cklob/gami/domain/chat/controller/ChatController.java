@@ -1,9 +1,9 @@
-package com.team.cklob.gami.domain.chat.presentation;
+package com.team.cklob.gami.domain.chat.controller;
 
-import com.team.cklob.gami.domain.chat.presentation.request.ChatMessageRequest;
-import com.team.cklob.gami.domain.chat.presentation.response.ChatMessagePageResponse;
-import com.team.cklob.gami.domain.chat.presentation.response.GetChatRoomListResponse;
-import com.team.cklob.gami.domain.chat.presentation.response.GetChatRoomResponse;
+import com.team.cklob.gami.domain.chat.dto.request.ChatMessageRequest;
+import com.team.cklob.gami.domain.chat.dto.response.ChatMessagePageResponse;
+import com.team.cklob.gami.domain.chat.dto.response.GetChatRoomListResponse;
+import com.team.cklob.gami.domain.chat.dto.response.GetChatRoomResponse;
 import com.team.cklob.gami.domain.chat.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
