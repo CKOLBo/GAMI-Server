@@ -1,7 +1,7 @@
 package com.team.cklob.gami.global.redis;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.team.cklob.gami.domain.chat.presentation.response.ChatMessageResponse;
+import com.team.cklob.gami.domain.chat.dto.response.ChatMessageResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;

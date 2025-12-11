@@ -5,7 +5,7 @@ import com.team.cklob.gami.domain.member.entity.MemberDetail;
 import com.team.cklob.gami.domain.member.exception.NotFoundMemberDetailException;
 import com.team.cklob.gami.domain.member.repository.MemberDetailRepository;
 import com.team.cklob.gami.domain.mentoring.exception.NotFoundRandomMentorException;
-import com.team.cklob.gami.domain.mentoring.presentation.dto.response.GetMentorResponse;
+import com.team.cklob.gami.domain.mentoring.dto.response.GetMentorResponse;
 import com.team.cklob.gami.domain.mentoring.service.RandomSearchService;
 import com.team.cklob.gami.global.util.MemberUtil;
 import lombok.RequiredArgsConstructor;

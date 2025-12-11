@@ -4,7 +4,7 @@ import com.team.cklob.gami.domain.member.entity.Member;
 import com.team.cklob.gami.domain.member.entity.MemberDetail;
 import com.team.cklob.gami.domain.member.entity.constant.Major;
 import com.team.cklob.gami.domain.member.repository.MemberDetailRepository;
-import com.team.cklob.gami.domain.mentoring.presentation.dto.response.GetMentorResponse;
+import com.team.cklob.gami.domain.mentoring.dto.response.GetMentorResponse;
 import com.team.cklob.gami.domain.mentoring.service.GetMentorListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

@@ -2,7 +2,7 @@ package com.team.cklob.gami.domain.auth.service.impl;
 
 import com.team.cklob.gami.domain.auth.exception.EmailAlreadyExistsException;
 import com.team.cklob.gami.domain.auth.exception.UnverifiedEmailException;
-import com.team.cklob.gami.domain.auth.presentation.dto.request.SignUpRequest;
+import com.team.cklob.gami.domain.auth.dto.request.SignUpRequest;
 import com.team.cklob.gami.domain.auth.service.SignUpService;
 import com.team.cklob.gami.domain.member.entity.Member;
 import com.team.cklob.gami.domain.member.entity.MemberDetail;
