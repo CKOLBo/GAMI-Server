@@ -1,4 +1,4 @@
-package com.team.cklob.gami.domain.chat.presentation.response;
+package com.team.cklob.gami.domain.chat.dto.response;
 
 import com.team.cklob.gami.domain.chat.entity.constant.RoomStatus;
 import lombok.Builder;

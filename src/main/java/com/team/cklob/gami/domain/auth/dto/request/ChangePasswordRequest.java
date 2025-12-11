@@ -1,4 +1,4 @@
-package com.team.cklob.gami.domain.auth.presentation.dto.request;
+package com.team.cklob.gami.domain.auth.dto.request;
 
 public record ChangePasswordRequest(
         String email,

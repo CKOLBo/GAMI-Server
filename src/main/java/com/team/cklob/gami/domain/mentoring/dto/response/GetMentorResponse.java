@@ -1,11 +1,11 @@
-package com.team.cklob.gami.domain.member.presentation.dto.response;
+package com.team.cklob.gami.domain.mentoring.dto.response;
 
 import com.team.cklob.gami.domain.member.entity.constant.Gender;
 import com.team.cklob.gami.domain.member.entity.constant.Major;
 import lombok.Builder;
 
 @Builder
-public record GetMemberProfileResponse(
+public record GetMentorResponse(
         Long  memberId,
         String name,
         Gender gender,

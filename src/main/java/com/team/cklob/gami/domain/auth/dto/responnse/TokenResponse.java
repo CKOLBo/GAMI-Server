@@ -1,4 +1,4 @@
-package com.team.cklob.gami.domain.auth.presentation.dto.responnse;
+package com.team.cklob.gami.domain.auth.dto.responnse;
 
 import java.time.LocalDateTime;
 

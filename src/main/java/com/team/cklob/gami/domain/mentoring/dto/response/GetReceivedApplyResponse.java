@@ -1,4 +1,4 @@
-package com.team.cklob.gami.domain.mentoring.presentation.dto.response;
+package com.team.cklob.gami.domain.mentoring.dto.response;
 
 import com.team.cklob.gami.domain.mentoring.entity.constant.ApplyStatus;
 import lombok.Builder;

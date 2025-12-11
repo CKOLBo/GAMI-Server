@@ -1,4 +1,4 @@
-package com.team.cklob.gami.domain.mentoring.presentation.dto.request;
+package com.team.cklob.gami.domain.mentoring.dto.request;
 
 import com.team.cklob.gami.domain.mentoring.entity.constant.ApplyStatus;
 

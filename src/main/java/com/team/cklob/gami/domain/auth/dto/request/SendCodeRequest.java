@@ -1,4 +1,4 @@
-package com.team.cklob.gami.domain.auth.presentation.dto.request;
+package com.team.cklob.gami.domain.auth.dto.request;
 
 import com.team.cklob.gami.domain.auth.entity.constant.VerificationType;
 

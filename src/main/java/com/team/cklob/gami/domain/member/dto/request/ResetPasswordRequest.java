@@ -1,4 +1,4 @@
-package com.team.cklob.gami.domain.member.presentation.dto.request;
+package com.team.cklob.gami.domain.member.dto.request;
 
 public record ResetPasswordRequest(
         String password,
