@@ -22,13 +22,13 @@ public class PostCreateServiceImpl implements PostCreateService {
     public Long create(PostCreateRequest request) {
         Member member = memberUtil.getCurrentMember();
 
-        Post post = Post.builder()
-                .member(member)
-                .title(request.getTitle())
-                .content(request.getContent())
-                .likeCount(0)
-                .build();
+        Post post = Post.create(
+                member,
+                request.getTitle(),
+                request.getContent()
+        );
 
-        return postRepository.save(post).getId();
+        postRepository.save(post);
+        return post.getId();
     }
 }
