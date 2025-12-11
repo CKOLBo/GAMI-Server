@@ -18,6 +18,7 @@ public class RedisUtil {
     private final RedisTemplate<String, Object> redisBlackListTemplate;
     private final ObjectMapper objectMapper;
 
+    private static final int MAX_CACHED_MESSAGES = 200;
 
     public void setCode(String key, String value, Long milliSeconds) {
         stringRedisTemplate.opsForValue().set(key, value, milliSeconds, TimeUnit.MINUTES);
@@ -64,7 +65,7 @@ public class RedisUtil {
             String json = objectMapper.writeValueAsString(response);
 
             stringRedisTemplate.opsForList().leftPush(key, json);
-            stringRedisTemplate.opsForList().trim(key, 0, 199);
+            stringRedisTemplate.opsForList().trim(key, 0, MAX_CACHED_MESSAGES - 1);
         } catch (Exception e) {
             log.error("Failed to append recent message to cache for key: {}", key, e);
         }
