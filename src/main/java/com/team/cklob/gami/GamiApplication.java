@@ -10,12 +10,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import java.time.LocalDateTime;
 
 @ConfigurationPropertiesScan
-@EnableJpaRepositories
+@EnableJpaAuditing
 @SpringBootApplication
 @RequiredArgsConstructor
 @EnableConfigurationProperties({JwtProperties.class, DiscordProperties.class})
