@@ -42,7 +42,7 @@ spring:
           timeout: 5000
           writetimeout: 5000
 
-    auth-code-expiration-millis: 300000
+      auth-code-expiration-millis: 300000
 
 jwt:
   accessSecret: ${JWT_ACCESS_SECRET:qXWbwKO97FDyg8AdNGh5SakyMHgdEdyfUZi3WPxKZ/c=}
@@ -55,4 +55,4 @@ app:
   env: ${APP_ENV:local}
 
 cors:
-  allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000,http://gsmsv-1.yujun.kr:27919}
+  allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost8080, http://localhost:3000, https://port-0-gami-server-mj0rdvda8d11523e.sel3.cloudtype.app/}
