@@ -1,18 +1,24 @@
 package com.team.cklob.gami.global.redis;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.team.cklob.gami.domain.chat.presentation.response.ChatMessageResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class RedisUtil {
 
     private final RedisTemplate<String, String> stringRedisTemplate;
     private final RedisTemplate<String, Object> redisBlackListTemplate;
+    private final ObjectMapper objectMapper;
 
+    private static final int MAX_CACHED_MESSAGES = 200;
 
     public void setCode(String key, String value, Long milliSeconds) {
         stringRedisTemplate.opsForValue().set(key, value, milliSeconds, TimeUnit.MINUTES);
@@ -52,5 +58,16 @@ public class RedisUtil {
 
     public boolean deleteBlackList(String key) {
         return redisBlackListTemplate.delete(key);
+    }
+
+    public void appendRecentMessage(ChatMessageResponse response, String key) {
+        try {
+            String json = objectMapper.writeValueAsString(response);
+
+            stringRedisTemplate.opsForList().leftPush(key, json);
+            stringRedisTemplate.opsForList().trim(key, 0, MAX_CACHED_MESSAGES - 1);
+        } catch (Exception e) {
+            log.error("Failed to append recent message to cache for key: {}", key, e);
+        }
     }
 }
