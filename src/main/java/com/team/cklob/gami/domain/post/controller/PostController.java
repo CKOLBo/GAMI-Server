@@ -4,8 +4,7 @@ import com.team.cklob.gami.domain.post.dto.request.PostCreateRequest;
 import com.team.cklob.gami.domain.post.dto.request.PostSearchRequest;
 import com.team.cklob.gami.domain.post.dto.request.PostUpdateRequest;
 import com.team.cklob.gami.domain.post.dto.response.PostResponse;
-import com.team.cklob.gami.domain.post.service.PostCommandService;
-import com.team.cklob.gami.domain.post.service.PostQueryService;
+import com.team.cklob.gami.domain.post.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -17,18 +16,21 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/post")
 public class PostController {
 
-    private final PostCommandService postCommandService;
-    private final PostQueryService postQueryService;
+    private final PostCreateService postCreateService;
+    private final PostDeleteService postDeleteService;
+    private final PostDetailService postDetailService;
+    private final PostListService postListService;
+    private final PostUpdateService postUpdateService;
 
     @PostMapping
     public ResponseEntity<Long> createPost(@RequestBody PostCreateRequest request) {
-        Long id = postCommandService.createPost(request);
+        Long id = postCreateService.create(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(id);
     }
 
     @GetMapping("/{postId}")
     public ResponseEntity<PostResponse> getPostDetail(@PathVariable("postId") Long postId) {
-        PostResponse post = postQueryService.getPost(postId);
+        PostResponse post = postDetailService.get(postId);
         return ResponseEntity.ok(post);
     }
 
@@ -46,7 +48,7 @@ public class PostController {
                 .sort(sort)
                 .build();
 
-        Page<PostResponse> result = postQueryService.getPostList(request);
+        Page<PostResponse> result = postListService.getList(request);
         return ResponseEntity.ok(result);
     }
 
@@ -55,13 +57,13 @@ public class PostController {
             @PathVariable("postId") Long postId,
             @RequestBody PostUpdateRequest request
     ) {
-        postCommandService.updatePost(postId, request);
+        postUpdateService.update(postId, request);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{postId}")
     public ResponseEntity<Void> deletePost(@PathVariable("postId") Long postId) {
-        postCommandService.deletePost(postId);
+        postDeleteService.delete(postId);
         return ResponseEntity.noContent().build();
     }
 }
