@@ -3,11 +3,9 @@ package com.team.cklob.gami.domain.post.service.impl;
 import com.team.cklob.gami.domain.post.dto.request.PostSearchRequest;
 import com.team.cklob.gami.domain.post.dto.response.PostResponse;
 import com.team.cklob.gami.domain.post.entity.Post;
-import com.team.cklob.gami.domain.post.exception.NotFoundPostException;
 import com.team.cklob.gami.domain.post.exception.NotFoundPostPageException;
 import com.team.cklob.gami.domain.post.repository.PostQueryRepository;
-import com.team.cklob.gami.domain.post.repository.PostRepository;
-import com.team.cklob.gami.domain.post.service.PostQueryService;
+import com.team.cklob.gami.domain.post.service.PostListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,20 +17,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class PostQueryServiceImpl implements PostQueryService {
+public class PostListServiceImpl implements PostListService {
 
-    private final PostRepository postRepository;
     private final PostQueryRepository postQueryRepository;
 
     @Override
-    public PostResponse getPost(Long postId) {
-        Post post = postRepository.findById(postId)
-                .orElseThrow(NotFoundPostException::new);
-        return PostResponse.from(post);
-    }
+    public Page<PostResponse> getList(PostSearchRequest request) {
 
-    @Override
-    public Page<PostResponse> getPostList(PostSearchRequest request) {
         int page = request.getPage() != null ? request.getPage() : 0;
         int size = request.getSize() != null ? request.getSize() : 10;
 
