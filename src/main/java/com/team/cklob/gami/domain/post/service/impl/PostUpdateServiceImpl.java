@@ -21,14 +21,9 @@ public class PostUpdateServiceImpl implements PostUpdateService {
         Post post = postRepository.findById(postId)
                 .orElseThrow(NotFoundPostException::new);
 
-        Post updatedPost = Post.builder()
-                .id(post.getId())
-                .member(post.getMember())
-                .title(request.getTitle())
-                .content(request.getContent())
-                .likeCount(post.getLikeCount())
-                .build();
-
-        postRepository.save(updatedPost);
+        post.update(
+                request.getTitle(),
+                request.getContent()
+        );
     }
 }
