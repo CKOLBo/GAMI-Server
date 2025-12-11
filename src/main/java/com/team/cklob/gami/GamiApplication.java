@@ -1,17 +1,21 @@
 package com.team.cklob.gami;
 
+import com.team.cklob.gami.global.discord.DiscordProperties;
 import com.team.cklob.gami.global.discord.DiscordWebhookService;
 import com.team.cklob.gami.global.security.jwt.JwtProperties;
 import com.team.cklob.gami.global.util.EnvironmentUtil;
-import com.team.cklob.gami.global.discord.DiscordProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import java.time.LocalDateTime;
 
+@ConfigurationPropertiesScan
+@EnableJpaAuditing
 @SpringBootApplication
 @RequiredArgsConstructor
 @EnableConfigurationProperties({JwtProperties.class, DiscordProperties.class})
