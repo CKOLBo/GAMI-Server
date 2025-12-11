@@ -87,6 +87,7 @@ public class GetChatRoomMessageServiceImpl implements GetChatRoomMessageService 
                             try {
                                 return objectMapper.readValue(json, ChatMessageResponse.class);
                             } catch (Exception e) {
+                                log.error("Failed to deserialize chat message from cache. json: {}", json, e);
                                 return null;
                             }
                         })
