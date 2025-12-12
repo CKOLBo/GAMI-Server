@@ -1,7 +1,9 @@
 package com.team.cklob.gami.domain.post.service.impl;
 
+import com.team.cklob.gami.domain.post.dto.request.PostImageRequest;
 import com.team.cklob.gami.domain.post.dto.request.PostUpdateRequest;
 import com.team.cklob.gami.domain.post.entity.Post;
+import com.team.cklob.gami.domain.post.entity.PostImage;
 import com.team.cklob.gami.domain.post.exception.NotFoundPostException;
 import com.team.cklob.gami.domain.post.repository.PostRepository;
 import com.team.cklob.gami.domain.post.service.PostUpdateService;
@@ -21,9 +23,20 @@ public class PostUpdateServiceImpl implements PostUpdateService {
         Post post = postRepository.findById(postId)
                 .orElseThrow(NotFoundPostException::new);
 
-        post.update(
-                request.getTitle(),
-                request.getContent()
-        );
+        post.update(request.getTitle(), request.getContent());
+
+        post.getImages().clear();
+
+        if (request.getImages() != null) {
+            for (PostImageRequest img : request.getImages()) {
+                PostImage newImage = PostImage.builder()
+                        .post(post)
+                        .imageUrl(img.getImageUrl())
+                        .sequence(img.getSequence())
+                        .build();
+
+                post.getImages().add(newImage);
+            }
+        }
     }
 }
