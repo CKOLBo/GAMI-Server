@@ -1,16 +1,20 @@
 package com.team.cklob.gami.domain.post.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class PostCreateRequest {
 
+    @NotBlank
+    @Size(max = 30)
     private String title;
+
+    @NotBlank
     private String content;
+
+    private List<PostImageRequest> images;
 }
