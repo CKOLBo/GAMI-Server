@@ -55,7 +55,7 @@ app:
   env: ${APP_ENV:local}
 
 cors:
-  allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000,http://gsmsv-1.yujun.kr:27919}
+  allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000,https://port-0-gami-server-mj0rdvda8d11523e.sel3.cloudtype.app}
 
 cloud:
   aws:

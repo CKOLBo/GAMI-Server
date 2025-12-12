@@ -1,10 +1,7 @@
 package com.team.cklob.gami.domain.auth.service.impl;
 
-import com.team.cklob.gami.domain.auth.exception.EmailAlreadyExistsException;
-import com.team.cklob.gami.domain.auth.exception.NotFoundUserException;
 import com.team.cklob.gami.domain.auth.exception.NotFoundVerifyCodeException;
-import com.team.cklob.gami.domain.auth.exception.NotMatchedCodeException;
-import com.team.cklob.gami.domain.auth.presentation.dto.request.ChangePasswordRequest;
+import com.team.cklob.gami.domain.auth.dto.request.ChangePasswordRequest;
 import com.team.cklob.gami.domain.auth.service.ChangePasswordService;
 import com.team.cklob.gami.domain.member.entity.Member;
 import com.team.cklob.gami.domain.member.exception.NotFoundMemberException;

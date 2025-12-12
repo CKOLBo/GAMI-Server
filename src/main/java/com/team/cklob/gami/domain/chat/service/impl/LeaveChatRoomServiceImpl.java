@@ -6,7 +6,7 @@ import com.team.cklob.gami.domain.chat.exception.AlreadyEndedChatRoomException;
 import com.team.cklob.gami.domain.chat.exception.AlreadyLeftChatRoomException;
 import com.team.cklob.gami.domain.chat.exception.NotChatRoomMemberException;
 import com.team.cklob.gami.domain.chat.exception.NotFoundChatRoomException;
-import com.team.cklob.gami.domain.chat.presentation.response.ChatSystemMessageResponse;
+import com.team.cklob.gami.domain.chat.dto.response.ChatSystemMessageResponse;
 import com.team.cklob.gami.domain.chat.repository.ChatRoomRepository;
 import com.team.cklob.gami.domain.chat.service.LeaveChatRoomService;
 import com.team.cklob.gami.domain.member.entity.Member;

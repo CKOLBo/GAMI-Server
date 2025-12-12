@@ -2,7 +2,7 @@ package com.team.cklob.gami.domain.auth.service.impl;
 
 import com.team.cklob.gami.domain.auth.entity.constant.VerificationType;
 import com.team.cklob.gami.domain.auth.exception.EmailAlreadyExistsException;
-import com.team.cklob.gami.domain.auth.presentation.dto.request.SendCodeRequest;
+import com.team.cklob.gami.domain.auth.dto.request.SendCodeRequest;
 import com.team.cklob.gami.domain.auth.service.SendCodeService;
 import com.team.cklob.gami.domain.auth.exception.TooManyRequestsException;
 import com.team.cklob.gami.domain.member.repository.MemberRepository;

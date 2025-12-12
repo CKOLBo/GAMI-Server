@@ -6,8 +6,8 @@ import com.team.cklob.gami.domain.chat.exception.CannotSendMessageAfterLeavingEx
 import com.team.cklob.gami.domain.chat.exception.CannotSendMessageToEndedRoomException;
 import com.team.cklob.gami.domain.chat.exception.NotFoundChatMemberException;
 import com.team.cklob.gami.domain.chat.exception.NotFoundChatRoomException;
-import com.team.cklob.gami.domain.chat.presentation.request.ChatMessageRequest;
-import com.team.cklob.gami.domain.chat.presentation.response.ChatMessageResponse;
+import com.team.cklob.gami.domain.chat.dto.request.ChatMessageRequest;
+import com.team.cklob.gami.domain.chat.dto.response.ChatMessageResponse;
 import com.team.cklob.gami.domain.chat.repository.ChatMessageRepository;
 import com.team.cklob.gami.domain.chat.repository.ChatRoomRepository;
 import com.team.cklob.gami.domain.chat.service.ChatMessageService;

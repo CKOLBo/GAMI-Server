@@ -3,7 +3,7 @@ package com.team.cklob.gami.domain.mentoring.service.impl;
 import com.team.cklob.gami.domain.mentoring.entity.Apply;
 import com.team.cklob.gami.domain.mentoring.entity.constant.ApplyStatus;
 import com.team.cklob.gami.domain.mentoring.exception.ApplyNotFoundException;
-import com.team.cklob.gami.domain.mentoring.presentation.dto.request.ApplyStatusRequest;
+import com.team.cklob.gami.domain.mentoring.dto.request.ApplyStatusRequest;
 import com.team.cklob.gami.domain.mentoring.repository.ApplyRepository;
 import com.team.cklob.gami.domain.mentoring.service.MentoringApplyStatusService;
 import com.team.cklob.gami.global.event.CreateChatRoomEvent;
