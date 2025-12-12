@@ -56,3 +56,13 @@ app:
 
 cors:
   allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000,http://gsmsv-1.yujun.kr:27919}
+
+cloud:
+  aws:
+    credentials:
+      access-key: ${AWS_ACCESS_KEY}
+      secret-key: ${AWS_SECRET_KEY}
+    region: ap-northeast-2
+    s3:
+      bucket: gami-server-image
+      url-prefix: https://gami-server-image.s3.ap-northeast-2.amazonaws.com
