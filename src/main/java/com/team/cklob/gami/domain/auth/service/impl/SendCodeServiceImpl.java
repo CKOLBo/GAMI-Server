@@ -16,7 +16,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring6.SpringTemplateEngine;
 
 @Slf4j
 @Service
@@ -26,6 +29,7 @@ public class SendCodeServiceImpl implements SendCodeService {
     private final JavaMailSender javaMailSender;
     private final MemberRepository memberRepository;
     private final RedisUtil redisUtil;
+    private final SpringTemplateEngine templateEngine;
 
     private static final String EMAIL_AUTH_PREFIX = "auth:email:";
     private static final long EXPIRE_MINUTES = 5L;
@@ -45,8 +49,8 @@ public class SendCodeServiceImpl implements SendCodeService {
         }
 
         String code = createVerificationCode();
-        String key = EMAIL_AUTH_PREFIX +  request.email();
-        String limitKey = RATE_LIMIT_PREFIX +  request.email();
+        String key = EMAIL_AUTH_PREFIX + request.email();
+        String limitKey = RATE_LIMIT_PREFIX + request.email();
 
         if (redisUtil.hasKey(limitKey)) {
             throw new TooManyRequestsException();
@@ -65,19 +69,23 @@ public class SendCodeServiceImpl implements SendCodeService {
     }
 
     private MimeMessage createMail(String mail, String verificationCode) throws MessagingException {
-
         MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
-        message.setFrom(senderEmail);
-        message.setRecipients(MimeMessage.RecipientType.TO, mail);
-        message.setSubject("GAMI 이메일 인증");
-        message.setText("인증번호: " + verificationCode);
+        helper.setFrom(senderEmail);
+        helper.setTo(mail);
+        helper.setSubject("GAMI 이메일 인증");
+
+        Context context = new Context();
+        context.setVariable("verificationCode", verificationCode);
+
+        String htmlContent = templateEngine.process("email-verification", context);
+        helper.setText(htmlContent, true);
 
         return message;
     }
 
     private String createVerificationCode() {
-
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         java.security.SecureRandom random = new java.security.SecureRandom();
 
