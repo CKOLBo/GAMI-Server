@@ -42,6 +42,9 @@ public enum ErrorCode {
     INVALID_COMMENT_REQUEST(400, "댓글 요청 정보가 유효하지 않습니다."),
     NOT_FOUND_COMMENT(404, "해당 댓글을 찾을 수 없습니다."),
     FORBIDDEN_COMMENT_ACCESS(403, "댓글에 대한 권한이 없습니다."),
+    INVALID_POST_IMAGE_EXTENSION(400, "지원하지 않는 게시글 이미지 확장자입니다."),
+    POST_IMAGE_UPLOAD_FAILED(500, "게시글 이미지 업로드에 실패했습니다."),
+    POST_IMAGE_DELETE_FAILED(500, "게시글 이미지 삭제에 실패했습니다."),
 
     // MENTORING
     RANDOM_MENTOR_NOT_FOUND(404, "조건에 맞는 멘토를 찾을 수 없습니다."),
