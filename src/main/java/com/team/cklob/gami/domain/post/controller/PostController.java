@@ -5,10 +5,12 @@ import com.team.cklob.gami.domain.post.dto.request.PostSearchRequest;
 import com.team.cklob.gami.domain.post.dto.request.PostUpdateRequest;
 import com.team.cklob.gami.domain.post.dto.response.PostResponse;
 import com.team.cklob.gami.domain.post.service.*;
+import com.team.cklob.gami.global.auth.MemberDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,15 +25,18 @@ public class PostController {
     private final PostUpdateService postUpdateService;
 
     @PostMapping
-    public ResponseEntity<Long> createPost(@RequestBody PostCreateRequest request) {
-        Long id = postCreateService.create(request);
+    public ResponseEntity<Long> createPost(
+            @RequestBody PostCreateRequest request,
+            @AuthenticationPrincipal MemberDetails memberDetails
+    ) {
+        Long memberId = memberDetails.getMember().getId();
+        Long id = postCreateService.create(request, memberId);
         return ResponseEntity.status(HttpStatus.CREATED).body(id);
     }
 
     @GetMapping("/{postId}")
     public ResponseEntity<PostResponse> getPostDetail(@PathVariable("postId") Long postId) {
-        PostResponse post = postDetailService.get(postId);
-        return ResponseEntity.ok(post);
+        return ResponseEntity.ok(postDetailService.get(postId));
     }
 
     @GetMapping
@@ -48,8 +53,7 @@ public class PostController {
                 .sort(sort)
                 .build();
 
-        Page<PostResponse> result = postListService.getList(request);
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(postListService.getList(request));
     }
 
     @PatchMapping("/{postId}")
