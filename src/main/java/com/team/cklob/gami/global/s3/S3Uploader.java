@@ -11,7 +11,6 @@ import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
-import software.amazon.awssdk.services.s3.model.S3Exception;
 
 import java.io.IOException;
 import java.util.List;
@@ -42,75 +41,40 @@ public class S3Uploader {
             throw new PostInvalidImageExtensionException();
         }
 
-        String extension = originalFilename.substring(originalFilename.lastIndexOf('.') + 1).toLowerCase();
+        String extension =
+                originalFilename.substring(originalFilename.lastIndexOf('.') + 1).toLowerCase();
+
         if (!ALLOWED_EXTENSIONS.contains(extension)) {
             throw new PostInvalidImageExtensionException();
         }
 
-        String key = buildKey(dirName, extension);
+        String key = dirName + "/" + UUID.randomUUID() + "." + extension;
 
         try {
-            PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+            PutObjectRequest request = PutObjectRequest.builder()
                     .bucket(bucket)
                     .key(key)
                     .contentType(file.getContentType())
                     .build();
 
-            s3Client.putObject(
-                    putObjectRequest,
-                    RequestBody.fromBytes(file.getBytes())
-            );
+            s3Client.putObject(request, RequestBody.fromBytes(file.getBytes()));
 
-        } catch (IOException | S3Exception e) {
+            return urlPrefix + "/" + key;
+        } catch (IOException e) {
             throw new PostImageUploadFailedException();
         }
-
-        return urlPrefix.endsWith("/") ? urlPrefix + key : urlPrefix + "/" + key;
     }
 
     public void delete(String imageUrl) {
-        if (imageUrl == null || imageUrl.isBlank()) {
-            return;
-        }
-
-        String key = extractKey(imageUrl);
-        if (key == null || key.isBlank()) {
-            return;
-        }
-
         try {
-            DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
+            String key = imageUrl.substring(urlPrefix.length() + 1);
+
+            s3Client.deleteObject(DeleteObjectRequest.builder()
                     .bucket(bucket)
                     .key(key)
-                    .build();
-
-            s3Client.deleteObject(deleteObjectRequest);
-
-        } catch (S3Exception e) {
+                    .build());
+        } catch (Exception e) {
             throw new PostImageDeleteFailedException();
         }
-    }
-
-    private String buildKey(String dirName, String extension) {
-        String uuid = UUID.randomUUID().toString();
-        return (dirName == null || dirName.isBlank())
-                ? uuid + "." + extension
-                : dirName + "/" + uuid + "." + extension;
-    }
-
-    private String extractKey(String imageUrl) {
-        String normalizedPrefix = urlPrefix.endsWith("/")
-                ? urlPrefix.substring(0, urlPrefix.length() - 1)
-                : urlPrefix;
-
-        String normalizedUrl = imageUrl.startsWith(normalizedPrefix)
-                ? imageUrl.substring(normalizedPrefix.length())
-                : imageUrl;
-
-        if (normalizedUrl.startsWith("/")) {
-            normalizedUrl = normalizedUrl.substring(1);
-        }
-
-        return normalizedUrl;
     }
 }
