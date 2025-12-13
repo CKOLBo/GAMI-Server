@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GAMI 인증번호</title>
+</head>
+<body style="background-color: #F9F9F9; padding: 20px; margin: 0;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #F9F9F9;">
+    <tr>
+        <td align="center" style="padding: 20px;">
+            <table width="500" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border-radius: 16px; overflow: hidden; max-width: 500px;">
+                <!-- Header -->
+                <tr>
+                    <td style="background: linear-gradient(180deg, #BFA9FF 0%, #73A9FF 100%); padding: 30px 20px; text-align: center;">
+                        <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                            <tr>
+                                <td align="center" style="padding-bottom: 20px;">
+                                    <div style="color: #ffffff; font-size: 32px; font-weight: 700;">GAMI</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="color: #ffffff; font-size: 14px; margin: 0;">
+                                    멘토와 멘티를 바로 연결하는 맞춤형 멘토링 서비스
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <!-- Content -->
+                <tr>
+                    <td style="padding: 20px 30px; text-align: center;">
+                        <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                            <tr>
+                                <td align="center" style="color: #73A9FF; font-size: 26px; font-weight: 700; padding-bottom: 20px;">
+                                    인증번호를 확인해주세요
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="font-size: 18px; font-weight: 700; color: #333D48; padding-bottom: 20px;">
+                                    아래의 인증번호를 입력하여 인증을 완료해주세요.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="padding: 20px 0;">
+                                    <table cellpadding="0" cellspacing="0" border="0" style="display: inline-block; padding: 16px 50px; border: 2px solid #73A9FF; border-radius: 20px; background-color: #F3F7FF;">
+                                        <tr>
+                                            <td style="font-size: 30px; font-weight: 700; color: #73A9FF; letter-spacing: 4px;">
+                                                <span th:text="${verificationCode}">123456</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="font-size: 18px; font-weight: 700; color: #333D48;">
+                                    인증번호는 5분간 유효합니다.
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
