@@ -4,11 +4,11 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
+@Table(name = "post_image")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "post_image")
 public class PostImage {
 
     @Id
@@ -20,9 +20,13 @@ public class PostImage {
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 
-    @Column(name = "image_url", nullable = false)
+    @Column(nullable = false)
     private String imageUrl;
 
-    @Column(name = "sequence", nullable = false)
+    @Column(nullable = false)
     private Integer sequence;
+
+    public void updateSequence(Integer sequence) {
+        this.sequence = sequence;
+    }
 }
