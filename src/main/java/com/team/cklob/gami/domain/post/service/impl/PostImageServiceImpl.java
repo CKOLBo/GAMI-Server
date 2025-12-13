@@ -16,9 +16,7 @@ public class PostImageServiceImpl implements PostImageService {
     @Override
     public PostImageUploadResponse uploadImage(MultipartFile image) {
         String imageUrl = s3Uploader.upload(image, "post");
-        return PostImageUploadResponse.builder()
-                .imageUrl(imageUrl)
-                .build();
+        return new PostImageUploadResponse(imageUrl);
     }
 
     @Override
