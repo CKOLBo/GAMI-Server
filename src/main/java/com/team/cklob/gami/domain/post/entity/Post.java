@@ -59,6 +59,7 @@ public class Post {
                 .member(member)
                 .title(title)
                 .content(content)
+                .summary("")
                 .build();
     }
 
