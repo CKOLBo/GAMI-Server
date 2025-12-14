@@ -69,5 +69,5 @@ cloud:
 
 gemini:
   api-key: ${GEMINI_API_KEY}
-  base-url: https://generativelanguage.googleapis.com
+  api-url: ${GEMINI_API_URL:https://generativelanguage.googleapis.com/v1beta}
   model: gemini-2.5-flash
