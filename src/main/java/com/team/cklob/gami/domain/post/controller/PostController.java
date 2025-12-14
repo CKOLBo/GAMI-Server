@@ -4,6 +4,7 @@ import com.team.cklob.gami.domain.post.dto.request.PostCreateRequest;
 import com.team.cklob.gami.domain.post.dto.request.PostSearchRequest;
 import com.team.cklob.gami.domain.post.dto.request.PostUpdateRequest;
 import com.team.cklob.gami.domain.post.dto.response.PostResponse;
+import com.team.cklob.gami.domain.post.dto.response.PostSummaryResponse;
 import com.team.cklob.gami.domain.post.service.*;
 import com.team.cklob.gami.global.auth.MemberDetails;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class PostController {
     private final PostDetailService postDetailService;
     private final PostListService postListService;
     private final PostUpdateService postUpdateService;
+    private final PostSummaryService postSummaryService;
 
     @PostMapping
     public ResponseEntity<Long> createPost(
@@ -37,6 +39,12 @@ public class PostController {
     @GetMapping("/{postId}")
     public ResponseEntity<PostResponse> getPostDetail(@PathVariable("postId") Long postId) {
         return ResponseEntity.ok(postDetailService.get(postId));
+    }
+
+    @GetMapping("/summary/{postId}")
+    public ResponseEntity<PostSummaryResponse> getPostSummary(@PathVariable("postId") Long postId) {
+        PostSummaryResponse response = postSummaryService.execute(postId);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping
