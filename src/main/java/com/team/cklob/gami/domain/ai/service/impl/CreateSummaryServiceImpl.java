@@ -32,6 +32,9 @@ public class CreateSummaryServiceImpl implements CreateSummaryService {
     @Value("${gemini.api-url}")
     private String apiUrl;
 
+    @Value("${gemini.model}")
+    private String model;
+
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void execute(CreateSummaryEvent event) {
@@ -67,12 +70,16 @@ public class CreateSummaryServiceImpl implements CreateSummaryService {
             request.setContents(List.of(content));
 
             GeminiResponse response = webClient.post()
-                    .uri(apiUrl + "?key=" + apiKey)
+                    .uri(uriBuilder -> uriBuilder
+                            .path("/models/{model}:generateContent")
+                            .queryParam("key", apiKey)
+                            .build(model))
                     .contentType(MediaType.APPLICATION_JSON)
                     .bodyValue(request)
                     .retrieve()
                     .bodyToMono(GeminiResponse.class)
                     .block();
+
 
             if (response != null &&
                     response.getCandidates() != null &&
