@@ -77,26 +77,45 @@ public class CreateSummaryServiceImpl implements CreateSummaryService {
                     .bodyToMono(GeminiResponse.class)
                     .block();
 
-
-            if (response != null &&
-                    response.getCandidates() != null &&
-                    !response.getCandidates().isEmpty()) {
-
-                String summary = response.getCandidates().get(0)
-                        .getContent()
-                        .getParts().get(0)
-                        .getText();
-
-                log.debug("Gemini API 응답 성공");
-                return summary;
-            }
-
-            log.warn("Gemini API 응답이 비어있습니다.");
-            return "요약을 생성할 수 없습니다.";
+            return extractSummaryFromResponse(response);
 
         } catch (Exception e) {
             log.error("Gemini API 호출 중 오류 발생: {}", e.getMessage(), e);
             throw new RuntimeException("Gemini API 호출 실패", e);
         }
+    }
+
+    private String extractSummaryFromResponse(GeminiResponse response) {
+        if (response == null) {
+            log.warn("Gemini API 응답이 null입니다.");
+            return "요약을 생성할 수 없습니다.";
+        }
+
+        List<GeminiResponse.Candidate> candidates = response.getCandidates();
+        if (candidates == null || candidates.isEmpty()) {
+            log.warn("Gemini API 응답에 candidates가 없습니다.");
+            return "요약을 생성할 수 없습니다.";
+        }
+
+        GeminiResponse.Content content = candidates.get(0).getContent();
+        if (content == null) {
+            log.warn("Gemini API 응답에 content가 없습니다.");
+            return "요약을 생성할 수 없습니다.";
+        }
+
+        List<GeminiResponse.Part> parts = content.getParts();
+        if (parts == null || parts.isEmpty()) {
+            log.warn("Gemini API 응답에 parts가 없습니다.");
+            return "요약을 생성할 수 없습니다.";
+        }
+
+        String text = parts.get(0).getText();
+        if (text == null || text.isBlank()) {
+            log.warn("Gemini API 응답 텍스트가 비어있습니다.");
+            return "요약을 생성할 수 없습니다.";
+        }
+
+        log.debug("Gemini API 응답 성공");
+        return text;
     }
 }
