@@ -23,7 +23,8 @@ public class PostSummaryServiceImpl implements PostSummaryService {
         Post post = postRepository.findById(postId)
                 .orElseThrow(NotFoundPostException::new);
 
-        if (post.getSummary() == null) {
+        String summary = post.getSummary();
+        if (summary == null || summary.isBlank()) {
             throw new MissingSummaryException();
         }
 
