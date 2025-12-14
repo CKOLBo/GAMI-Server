@@ -2,15 +2,11 @@ package com.team.cklob.gami.domain.post.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class PostUpdateRequest {
 
     @NotBlank
@@ -19,4 +15,6 @@ public class PostUpdateRequest {
 
     @NotBlank
     private String content;
+
+    private List<PostImageRequest> images;
 }

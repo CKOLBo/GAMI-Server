@@ -1,10 +1,12 @@
 package com.team.cklob.gami.domain.post.dto.response;
 
 import com.team.cklob.gami.domain.post.entity.Post;
+import com.team.cklob.gami.domain.post.entity.PostImage;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Builder
@@ -17,6 +19,7 @@ public class PostResponse {
     private Long memberId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private List<String> images; // 이미지 URL 리스트
 
     public static PostResponse from(Post post) {
         return PostResponse.builder()
@@ -27,6 +30,9 @@ public class PostResponse {
                 .memberId(post.getMember().getId())
                 .createdAt(post.getCreatedAt())
                 .updatedAt(post.getUpdatedAt())
+                .images(post.getImages().stream()
+                        .map(PostImage::getImageUrl)
+                        .toList())
                 .build();
     }
 }
