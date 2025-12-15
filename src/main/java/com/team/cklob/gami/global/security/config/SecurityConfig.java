@@ -82,6 +82,9 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.DELETE, "/api/post/images").authenticated()
                                 .requestMatchers(HttpMethod.GET, "/api/post/summary/{postId}").authenticated()
 
+                                // POST LIKE
+                                .requestMatchers(HttpMethod.POST, "/api/post/*/like").authenticated()
+                                .requestMatchers(HttpMethod.DELETE, "/api/post/*/like").authenticated()
 
                                 // REPORT
                                 .requestMatchers(HttpMethod.POST, "/api/report").authenticated()
