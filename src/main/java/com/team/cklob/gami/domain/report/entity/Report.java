@@ -36,24 +36,37 @@ public class Report {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "report_type", nullable = false)
-    private ReportType  reportType;
+    private ReportType reportType;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "report_result", nullable = false)
     private ReportResult result;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "report_action",  nullable = false)
+    @Column(name = "report_action", nullable = false)
     private ReportAction action;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 
-    @Column(name = "reason",  nullable = false)
+    @Column(name = "reason", nullable = false)
     private String reason;
 
     @CreatedDate
     @Column(name = "report_at", updatable = false, nullable = false)
     private LocalDateTime reportAt;
+
+    @Column(name = "processed_at")
+    private LocalDateTime processedAt;
+
+    public boolean isProcessed() {
+        return this.processedAt != null;
+    }
+
+    public void process(ReportResult result, ReportAction action, LocalDateTime processedAt) {
+        this.result = result;
+        this.action = action;
+        this.processedAt = processedAt;
+    }
 }
