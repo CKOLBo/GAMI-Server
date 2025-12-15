@@ -66,3 +66,8 @@ cloud:
     s3:
       bucket: gami-server-image
       url-prefix: https://gami-server-image.s3.ap-northeast-2.amazonaws.com
+
+gemini:
+  api-key: ${GEMINI_API_KEY}
+  api-url: ${GEMINI_API_URL:https://generativelanguage.googleapis.com/v1beta}
+  model: gemini-2.5-flash

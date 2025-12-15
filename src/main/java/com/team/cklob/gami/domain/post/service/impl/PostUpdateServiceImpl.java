@@ -7,8 +7,11 @@ import com.team.cklob.gami.domain.post.entity.PostImage;
 import com.team.cklob.gami.domain.post.exception.NotFoundPostException;
 import com.team.cklob.gami.domain.post.repository.PostRepository;
 import com.team.cklob.gami.domain.post.service.PostUpdateService;
+import com.team.cklob.gami.global.event.CreateSummaryEvent;
 import com.team.cklob.gami.global.s3.S3Uploader;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.event.spi.PostUpdateEvent;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +28,7 @@ public class PostUpdateServiceImpl implements PostUpdateService {
 
     private final PostRepository postRepository;
     private final S3Uploader s3Uploader;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Override
     public void update(Long postId, PostUpdateRequest request) {
@@ -38,6 +42,8 @@ public class PostUpdateServiceImpl implements PostUpdateService {
                     request.getContent() != null ? request.getContent() : post.getContent()
             );
         }
+
+        eventPublisher.publishEvent(new CreateSummaryEvent(postId, post.getContent()));
 
         if (request.getImages() == null) {
             return;

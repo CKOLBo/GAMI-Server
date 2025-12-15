@@ -9,7 +9,9 @@ import com.team.cklob.gami.domain.post.entity.Post;
 import com.team.cklob.gami.domain.post.entity.PostImage;
 import com.team.cklob.gami.domain.post.repository.PostRepository;
 import com.team.cklob.gami.domain.post.service.PostCreateService;
+import com.team.cklob.gami.global.event.CreateSummaryEvent;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +22,7 @@ public class PostCreateServiceImpl implements PostCreateService {
 
     private final PostRepository postRepository;
     private final MemberRepository memberRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Override
     public Long create(PostCreateRequest request, Long memberId) {
@@ -29,6 +32,8 @@ public class PostCreateServiceImpl implements PostCreateService {
 
         Post post = Post.create(member, request.getTitle(), request.getContent());
         postRepository.save(post);
+
+        eventPublisher.publishEvent(new CreateSummaryEvent(post.getId(), post.getContent()));
 
         if (request.getImages() != null) {
             for (PostImageRequest img : request.getImages()) {

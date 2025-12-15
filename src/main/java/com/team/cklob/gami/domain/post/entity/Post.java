@@ -51,16 +51,24 @@ public class Post {
     @Builder.Default
     private List<PostImage> images = new ArrayList<>();
 
+    @Column(nullable = false)
+    private String summary;
+
     public static Post create(Member member, String title, String content) {
         return Post.builder()
                 .member(member)
                 .title(title)
                 .content(content)
+                .summary("")
                 .build();
     }
 
     public void update(String title, String content) {
         this.title = title;
         this.content = content;
+    }
+
+    public void updateSummary(String summary) {
+        this.summary = summary;
     }
 }

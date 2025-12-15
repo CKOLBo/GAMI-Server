@@ -80,6 +80,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, "/api/post", "/api/post/{postId}").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/post/images").authenticated()
                                 .requestMatchers(HttpMethod.DELETE, "/api/post/images").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/api/post/summary/{postId}").authenticated()
 
 
                                 // REPORT
