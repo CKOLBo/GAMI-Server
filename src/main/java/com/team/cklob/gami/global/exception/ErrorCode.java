@@ -33,6 +33,10 @@ public enum ErrorCode {
     NOT_FOUND_POST_PAGE(404, "요청한 페이지가 존재하지 않습니다."),
     FORBIDDEN_POST_ACCESS(403, "게시글에 대한 권한이 없습니다."),
 
+    // LIKE
+    ALREADY_LIKED_POST(409, "이미 좋아요한 게시글입니다."),
+    NOT_LIKED_POST(400, "좋아요하지 않은 게시글입니다."),
+
     // REPORT
     INVALID_REPORT_REQUEST(400, "신고 요청 정보가 유효하지 않습니다."),
     ALREADY_REPORTED(409, "이미 신고한 대상입니다."),
