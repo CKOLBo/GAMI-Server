@@ -47,6 +47,9 @@ public enum ErrorCode {
     POST_IMAGE_UPLOAD_FAILED(500, "게시글 이미지 업로드에 실패했습니다."),
     POST_IMAGE_DELETE_FAILED(500, "게시글 이미지 삭제에 실패했습니다."),
 
+    // ADMIN
+    ADMIN_POST_DELETE_FORBIDDEN(403, "관리자 권한이 필요합니다."),
+
     // MENTORING
     RANDOM_MENTOR_NOT_FOUND(404, "조건에 맞는 멘토를 찾을 수 없습니다."),
     ALREADY_REGISTERED_MENTOR(409, "이미 등록된 멘토입니다"),
