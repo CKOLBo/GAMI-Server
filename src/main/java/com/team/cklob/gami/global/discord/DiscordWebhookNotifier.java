@@ -27,7 +27,7 @@ public class DiscordWebhookNotifier {
         }
 
         Map<String, Object> body = new HashMap<>();
-        body.put("content", "@everyone");
+        body.put("content", "@g.hyxn_");
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
