@@ -5,6 +5,7 @@ import com.team.cklob.gami.domain.post.dto.response.PostResponse;
 import com.team.cklob.gami.domain.post.entity.Post;
 import com.team.cklob.gami.domain.post.exception.NotFoundPostPageException;
 import com.team.cklob.gami.domain.post.repository.PostQueryRepository;
+import com.team.cklob.gami.domain.post.repository.PostRepository;
 import com.team.cklob.gami.domain.post.service.PostListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class PostListServiceImpl implements PostListService {
 
     private final PostQueryRepository postQueryRepository;
+    private final PostRepository postRepository;
 
     @Override
     public Page<PostResponse> getList(PostSearchRequest request) {
@@ -36,6 +38,11 @@ public class PostListServiceImpl implements PostListService {
             throw new NotFoundPostPageException();
         }
 
-        return result.map(PostResponse::from);
+        return result.map(post ->
+                PostResponse.from(
+                        post,
+                        postRepository.countComments(post.getId())
+                )
+        );
     }
 }

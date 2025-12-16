@@ -18,9 +18,11 @@ public class PostDetailServiceImpl implements PostDetailService {
 
     @Override
     public PostResponse get(Long postId) {
-        Post post = postRepository.findById(postId)
+        Post post = postRepository.findPostDetail(postId)
                 .orElseThrow(NotFoundPostException::new);
 
-        return PostResponse.from(post);
+        int commentCount = postRepository.countComments(postId);
+
+        return PostResponse.from(post, commentCount);
     }
 }
