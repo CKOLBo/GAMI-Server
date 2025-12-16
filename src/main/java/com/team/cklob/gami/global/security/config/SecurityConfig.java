@@ -89,6 +89,9 @@ public class SecurityConfig {
                                 // REPORT
                                 .requestMatchers(HttpMethod.POST, "/api/report").authenticated()
 
+                                // ADMIN
+                                .requestMatchers("/api/admin/**").hasAuthority("ROLE_ROLE_ADMIN")
+
                                 // HEALTH
                                 .requestMatchers(HttpMethod.GET, "/api/health").permitAll()
 

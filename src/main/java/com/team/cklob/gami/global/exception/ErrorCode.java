@@ -42,6 +42,12 @@ public enum ErrorCode {
     ALREADY_REPORTED(409, "이미 신고한 대상입니다."),
     NOT_FOUND_REPORT_TARGET(404, "신고 대상이 존재하지 않습니다."),
 
+    // ADMIN
+    ADMIN_REPORT_NOT_FOUND(404, "관리자 신고를 찾을 수 없습니다."),
+    ADMIN_REPORT_ALREADY_PROCESSED(400, "이미 처리된 신고입니다."),
+    ADMIN_INVALID_REPORT_ACTION(400, "유효하지 않은 신고 처리 요청입니다."),
+    ADMIN_ACCESS_DENIED(403, "관리자 권한이 필요합니다."),
+
     // COMMENT
     INVALID_COMMENT_REQUEST(400, "댓글 요청 정보가 유효하지 않습니다."),
     NOT_FOUND_COMMENT(404, "해당 댓글을 찾을 수 없습니다."),
@@ -50,6 +56,9 @@ public enum ErrorCode {
     MISSING_SUMMARY(409, "게시글 요약이 존재하지 않습니다."),
     POST_IMAGE_UPLOAD_FAILED(500, "게시글 이미지 업로드에 실패했습니다."),
     POST_IMAGE_DELETE_FAILED(500, "게시글 이미지 삭제에 실패했습니다."),
+
+    // ADMIN
+    ADMIN_POST_DELETE_FORBIDDEN(403, "관리자 권한이 필요합니다."),
 
     // MENTORING
     RANDOM_MENTOR_NOT_FOUND(404, "조건에 맞는 멘토를 찾을 수 없습니다."),

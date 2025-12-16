@@ -8,9 +8,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 import static com.team.cklob.gami.global.filter.JwtFilter.AUTHORIZATION_HEADER;
 
@@ -37,14 +40,23 @@ public class TokenParser {
 
     public Authentication getAuthentication(String accessToken) {
         Claims claims = parseClaims(accessToken);
-        UserDetails principal = memberDetailsService.loadUserByUsername(claims.getSubject());
-        return new UsernamePasswordAuthenticationToken(principal, "", principal.getAuthorities());
+
+        String email = claims.getSubject();
+        String authority = claims.get("auth", String.class);
+
+        UserDetails principal = memberDetailsService.loadUserByUsername(email);
+
+        return new UsernamePasswordAuthenticationToken(
+                principal,
+                "",
+                List.of(new SimpleGrantedAuthority(authority))
+        );
     }
 
     public String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_TYPE)) {
-            return  bearerToken.substring(BEARER_TYPE.length());
+            return bearerToken.substring(BEARER_TYPE.length());
         }
         return null;
     }
