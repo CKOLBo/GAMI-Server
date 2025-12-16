@@ -2,9 +2,10 @@ package com.team.cklob.gami.domain.admin.service.impl;
 
 import com.team.cklob.gami.domain.admin.dto.request.AdminReportProcessRequest;
 import com.team.cklob.gami.domain.admin.dto.response.AdminReportDetailResponse;
+import com.team.cklob.gami.domain.admin.exception.AdminReportAlreadyProcessedException;
+import com.team.cklob.gami.domain.admin.exception.AdminReportNotFoundException;
 import com.team.cklob.gami.domain.admin.service.AdminReportProcessService;
 import com.team.cklob.gami.domain.report.entity.Report;
-import com.team.cklob.gami.domain.report.exception.InvalidReportRequestException;
 import com.team.cklob.gami.domain.report.repository.ReportRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,10 +23,10 @@ public class AdminReportProcessServiceImpl implements AdminReportProcessService 
     @Override
     public AdminReportDetailResponse processReport(Long reportId, AdminReportProcessRequest request) {
         Report report = reportRepository.findById(reportId)
-                .orElseThrow(InvalidReportRequestException::new);
+                .orElseThrow(AdminReportNotFoundException::new);
 
         if (report.isProcessed()) {
-            throw new InvalidReportRequestException();
+            throw new AdminReportAlreadyProcessedException();
         }
 
         report.process(
