@@ -16,17 +16,19 @@ public class PostResponse {
     private String title;
     private String content;
     private int likeCount;
+    private int commentCount;
     private Long memberId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private List<String> images; // 이미지 URL 리스트
+    private List<String> images;
 
-    public static PostResponse from(Post post) {
+    public static PostResponse from(Post post, int commentCount) {
         return PostResponse.builder()
                 .id(post.getId())
                 .title(post.getTitle())
                 .content(post.getContent())
                 .likeCount(post.getLikeCount())
+                .commentCount(commentCount)
                 .memberId(post.getMember().getId())
                 .createdAt(post.getCreatedAt())
                 .updatedAt(post.getUpdatedAt())
