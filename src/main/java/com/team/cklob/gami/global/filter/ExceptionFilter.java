@@ -20,21 +20,19 @@ public class ExceptionFilter extends OncePerRequestFilter {
     private final ObjectMapper objectMapper;
 
     @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String uri = request.getRequestURI();
+        return uri.startsWith("/swagger")
+                || uri.startsWith("/swagger-ui")
+                || uri.startsWith("/v3/api-docs");
+    }
+
+    @Override
     protected void doFilterInternal(
             HttpServletRequest request,
             HttpServletResponse response,
             FilterChain filterChain
     ) throws IOException, ServletException {
-
-        String uri = request.getRequestURI();
-
-        // ✅ Swagger / OpenAPI 요청은 ExceptionFilter에서 완전 제외
-        if (uri.startsWith("/swagger")
-                || uri.startsWith("/swagger-ui")
-                || uri.startsWith("/v3/api-docs")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
 
         try {
             filterChain.doFilter(request, response);

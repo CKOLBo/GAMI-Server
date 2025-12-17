@@ -23,21 +23,19 @@ public class JwtFilter extends OncePerRequestFilter {
     private final TokenParser tokenParser;
 
     @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String uri = request.getRequestURI();
+        return uri.startsWith("/swagger")
+                || uri.startsWith("/swagger-ui")
+                || uri.startsWith("/v3/api-docs");
+    }
+
+    @Override
     protected void doFilterInternal(
             HttpServletRequest request,
             HttpServletResponse response,
             FilterChain filterChain
     ) throws ServletException, IOException {
-
-        String uri = request.getRequestURI();
-
-        // ✅ Swagger / OpenAPI 완전 예외 처리
-        if (uri.startsWith("/swagger")
-                || uri.startsWith("/swagger-ui")
-                || uri.startsWith("/v3/api-docs")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
 
         String jwt = tokenParser.resolveToken(request);
 
