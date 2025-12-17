@@ -19,18 +19,31 @@ public class JwtFilter extends OncePerRequestFilter {
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
 
-
     private final JwtProvider jwtProvider;
-    private final TokenParser  tokenParser;
+    private final TokenParser tokenParser;
 
     @Override
-    public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String uri = request.getRequestURI();
+        return uri.startsWith("/swagger")
+                || uri.startsWith("/swagger-ui")
+                || uri.startsWith("/v3/api-docs");
+    }
+
+    @Override
+    protected void doFilterInternal(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain filterChain
+    ) throws ServletException, IOException {
+
         String jwt = tokenParser.resolveToken(request);
 
         if (StringUtils.hasText(jwt) && jwtProvider.validateAccessToken(jwt)) {
             Authentication authentication = tokenParser.getAuthentication(jwt);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
+
         filterChain.doFilter(request, response);
     }
 }

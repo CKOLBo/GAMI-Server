@@ -58,8 +58,11 @@ dependencies {
 	implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
 	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
-	// Swagger
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
+	// Swagger (Spring MVC + WebFlux 공존 안전 설정)
+	implementation('org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0') {
+		exclude group: 'org.springdoc', module: 'springdoc-openapi-starter-webflux-ui'
+		exclude group: 'org.springdoc', module: 'springdoc-openapi-starter-webflux-api'
+	}
 
 	// Mail
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
@@ -71,6 +74,14 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	configurations.all {
+		resolutionStrategy {
+			force 'org.springdoc:springdoc-openapi-starter-common:2.7.0'
+			force 'org.springdoc:springdoc-openapi-starter-webmvc-api:2.7.0'
+			force 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
+		}
+	}
 }
 
 tasks.named('test') {
