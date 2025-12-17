@@ -1,0 +1,103 @@
+package com.team.cklob.gami.domain.auth.service.impl;
+
+import com.team.cklob.gami.domain.auth.entity.constant.VerificationType;
+import com.team.cklob.gami.domain.auth.exception.EmailAlreadyExistsException;
+import com.team.cklob.gami.domain.auth.dto.request.SendCodeRequest;
+import com.team.cklob.gami.domain.auth.service.SendCodeService;
+import com.team.cklob.gami.domain.auth.exception.TooManyRequestsException;
+import com.team.cklob.gami.domain.member.repository.MemberRepository;
+import com.team.cklob.gami.global.redis.RedisUtil;
+import com.team.cklob.gami.global.security.exception.InternalServerErrorException;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.MailException;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Service;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring6.SpringTemplateEngine;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class SendCodeServiceImpl implements SendCodeService {
+
+    private final JavaMailSender javaMailSender;
+    private final MemberRepository memberRepository;
+    private final RedisUtil redisUtil;
+    private final SpringTemplateEngine templateEngine;
+
+    private static final String EMAIL_AUTH_PREFIX = "auth:email:";
+    private static final long EXPIRE_MINUTES = 5L;
+
+    private static final String RATE_LIMIT_PREFIX = "email:ratelimit:";
+    private static final long RATE_LIMIT_TIME = 30000L;
+
+    @Value("${spring.mail.username}")
+    private String senderEmail;
+
+    @Override
+    @Transactional
+    public void execute(SendCodeRequest request) {
+
+        if (request.verificationType() == VerificationType.SIGN_UP) {
+            validateDuplicateEmail(request.email());
+        }
+
+        String code = createVerificationCode();
+        String key = EMAIL_AUTH_PREFIX + request.email();
+        String limitKey = RATE_LIMIT_PREFIX + request.email();
+
+        if (redisUtil.hasKey(limitKey)) {
+            throw new TooManyRequestsException();
+        }
+
+        try {
+            MimeMessage message = createMail(request.email(), code);
+            javaMailSender.send(message);
+
+            redisUtil.setCode(key, code, EXPIRE_MINUTES);
+            redisUtil.pendingCode(limitKey, "1", RATE_LIMIT_TIME);
+        } catch (MessagingException | MailException e) {
+            log.error("Error sending verification code.", e);
+            throw new InternalServerErrorException();
+        }
+    }
+
+    private MimeMessage createMail(String mail, String verificationCode) throws MessagingException {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+        helper.setFrom(senderEmail);
+        helper.setTo(mail);
+        helper.setSubject("GAMI 이메일 인증");
+
+        Context context = new Context();
+        context.setVariable("verificationCode", verificationCode);
+
+        String htmlContent = templateEngine.process("email-verification", context);
+        helper.setText(htmlContent, true);
+
+        return message;
+    }
+
+    private String createVerificationCode() {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        java.security.SecureRandom random = new java.security.SecureRandom();
+
+        return random.ints(6, 0, characters.length())
+                .mapToObj(characters::charAt)
+                .collect(StringBuilder::new, StringBuilder::append, StringBuilder::append)
+                .toString();
+    }
+
+    private void validateDuplicateEmail(String email) {
+        if (memberRepository.findByEmail(email).isPresent()) {
+            throw new EmailAlreadyExistsException();
+        }
+    }
+}
