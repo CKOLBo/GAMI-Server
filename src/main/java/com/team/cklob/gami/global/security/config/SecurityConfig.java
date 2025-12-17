@@ -56,6 +56,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth
                                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+                                .requestMatchers(
+                                        "/swagger-ui/**",
+                                        "/v3/api-docs/**",
+                                        "/swagger",
+                                        "/swagger/**"
+                                ).permitAll()
 
                                 // AUTH
                                 .requestMatchers(HttpMethod.POST, "/api/auth/signup").permitAll()
