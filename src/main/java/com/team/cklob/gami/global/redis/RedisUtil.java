@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class RedisUtil {
 
-    private final RedisTemplate redisTemplate;
+    private final RedisTemplate<String, Object> redisTemplate;
     private final ObjectMapper objectMapper;
 
     private static final int MAX_CACHED_MESSAGES = 200;
@@ -63,11 +63,10 @@ public class RedisUtil {
     public void appendRecentMessage(ChatMessageResponse response, String key) {
         try {
             String json = objectMapper.writeValueAsString(response);
-
             redisTemplate.opsForList().leftPush(key, json);
             redisTemplate.opsForList().trim(key, 0, MAX_CACHED_MESSAGES - 1);
         } catch (Exception e) {
-            log.error("Failed to append recent message to cache for key: {}", key, e);
+            log.error("Failed to append recent message", e);
         }
     }
 }
