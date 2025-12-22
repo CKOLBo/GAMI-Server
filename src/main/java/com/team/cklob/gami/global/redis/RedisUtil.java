@@ -14,58 +14,58 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class RedisUtil {
 
-    private final RedisTemplate<String, String> stringRedisTemplate;
-    private final RedisTemplate<String, Object> redisBlackListTemplate;
+    private final RedisTemplate redisTemplate;
     private final ObjectMapper objectMapper;
 
     private static final int MAX_CACHED_MESSAGES = 200;
 
     public void setCode(String key, String value, Long milliSeconds) {
-        stringRedisTemplate.opsForValue().set(key, value, milliSeconds, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(key, value, milliSeconds, TimeUnit.MINUTES);
     }
 
     public void pendingCode(String key, String value, Long milliSeconds) {
-        stringRedisTemplate.opsForValue().set(key, value, milliSeconds, TimeUnit.MILLISECONDS);
+        redisTemplate.opsForValue().set(key, value, milliSeconds, TimeUnit.MILLISECONDS);
     }
 
     public boolean hasKey(String key) {
-        return Boolean.TRUE.equals(stringRedisTemplate.hasKey(key));
+        return Boolean.TRUE.equals(redisTemplate.hasKey(key));
     }
 
     public String getValue(String key) {
-        return stringRedisTemplate.opsForValue().get(key);
+        Object value = redisTemplate.opsForValue().get(key);
+        return value != null ? value.toString() : null;
     }
 
     public void setVerifyStatus(String key, String value, Long milliSeconds) {
-        stringRedisTemplate.opsForValue().setIfAbsent(key, value, milliSeconds, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().setIfAbsent(key, value, milliSeconds, TimeUnit.MINUTES);
     }
 
     public void setBlackList(String key, Object value, Long milliSeconds) {
-        redisBlackListTemplate.opsForValue().set(key, value, milliSeconds, TimeUnit.MILLISECONDS);
+        redisTemplate.opsForValue().set(key, value, milliSeconds, TimeUnit.MILLISECONDS);
     }
 
     public boolean deleteValue(String key) {
-        return stringRedisTemplate.delete(key);
+        return Boolean.TRUE.equals(redisTemplate.delete(key));
     }
 
     public Object getBlackList(String key) {
-        return redisBlackListTemplate.opsForValue().get(key);
+        return redisTemplate.opsForValue().get(key);
     }
 
     public boolean hasKeyBlackList(String key) {
-        return redisBlackListTemplate.hasKey(key);
+        return Boolean.TRUE.equals(redisTemplate.hasKey(key));
     }
 
     public boolean deleteBlackList(String key) {
-        return redisBlackListTemplate.delete(key);
+        return Boolean.TRUE.equals(redisTemplate.delete(key));
     }
 
     public void appendRecentMessage(ChatMessageResponse response, String key) {
         try {
             String json = objectMapper.writeValueAsString(response);
 
-            stringRedisTemplate.opsForList().leftPush(key, json);
-            stringRedisTemplate.opsForList().trim(key, 0, MAX_CACHED_MESSAGES - 1);
+            redisTemplate.opsForList().leftPush(key, json);
+            redisTemplate.opsForList().trim(key, 0, MAX_CACHED_MESSAGES - 1);
         } catch (Exception e) {
             log.error("Failed to append recent message to cache for key: {}", key, e);
         }
