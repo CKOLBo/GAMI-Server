@@ -17,24 +17,32 @@ public class PostResponse {
     private String content;
     private int likeCount;
     private int commentCount;
+    private boolean isLiked;
     private Long memberId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private List<String> images;
 
-    public static PostResponse from(Post post, int commentCount) {
+    public static PostResponse from(
+            Post post,
+            int commentCount,
+            boolean isLiked
+    ) {
         return PostResponse.builder()
                 .id(post.getId())
                 .title(post.getTitle())
                 .content(post.getContent())
                 .likeCount(post.getLikeCount())
                 .commentCount(commentCount)
+                .isLiked(isLiked)
                 .memberId(post.getMember().getId())
                 .createdAt(post.getCreatedAt())
                 .updatedAt(post.getUpdatedAt())
-                .images(post.getImages().stream()
-                        .map(PostImage::getImageUrl)
-                        .toList())
+                .images(
+                        post.getImages().stream()
+                                .map(PostImage::getImageUrl)
+                                .toList()
+                )
                 .build();
     }
 }
