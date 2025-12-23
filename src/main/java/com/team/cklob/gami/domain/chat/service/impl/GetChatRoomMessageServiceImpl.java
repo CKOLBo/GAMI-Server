@@ -19,6 +19,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -60,6 +61,7 @@ public class GetChatRoomMessageServiceImpl implements GetChatRoomMessageService 
             responses = convertToResponses(messages);
         }
 
+        responses = new ArrayList<>(responses);
         Collections.reverse(responses);
 
         Long nextCursor = responses.isEmpty() ? null : responses.get(0).messageId();
@@ -83,20 +85,11 @@ public class GetChatRoomMessageServiceImpl implements GetChatRoomMessageService 
 
             if (cachedJson != null && !cachedJson.isEmpty()) {
                 List<ChatMessageResponse> cached = cachedJson.stream()
-                        .map(json -> {
-                            try {
-                                return objectMapper.readValue(json, ChatMessageResponse.class);
-                            } catch (Exception e) {
-                                log.error("Failed to deserialize chat message from cache. json: {}", json, e);
-                                return null;
-                            }
-                        })
-                        .filter(response -> response != null)
+                        .map(this::safeParseCachedMessage)
+                        .filter(res -> res != null)
                         .toList();
 
-                if (cached.size() >= PAGE_SIZE) {
-                    return cached.subList(0, PAGE_SIZE);
-                }
+                return new ArrayList<>(cached.size() >= PAGE_SIZE ? cached.subList(0, PAGE_SIZE) : cached);
             }
         } catch (Exception e) {
             log.error("Failed to get messages from cache for room: {}", roomId, e);
@@ -109,8 +102,32 @@ public class GetChatRoomMessageServiceImpl implements GetChatRoomMessageService 
         return convertToResponses(messages);
     }
 
+    private ChatMessageResponse safeParseCachedMessage(String raw) {
+        try {
+            String json = unwrapIfQuotedJson(raw);
+            return objectMapper.readValue(json, ChatMessageResponse.class);
+        } catch (Exception e) {
+            log.error("Failed to deserialize chat message from cache. raw: {}", raw, e);
+            return null;
+        }
+    }
+
+    private String unwrapIfQuotedJson(String raw) {
+        if (raw == null) return null;
+        String s = raw.trim();
+
+        if (s.length() >= 2 && s.startsWith("\"") && s.endsWith("\"")) {
+            try {
+                return objectMapper.readValue(s, String.class);
+            } catch (Exception ignore) {
+                return s;
+            }
+        }
+        return s;
+    }
+
     private List<ChatMessageResponse> convertToResponses(List<ChatMessage> messages) {
-        return messages.stream()
+        List<ChatMessageResponse> list = messages.stream()
                 .map(msg -> new ChatMessageResponse(
                         msg.getId(),
                         msg.getMessage(),
@@ -119,5 +136,7 @@ public class GetChatRoomMessageServiceImpl implements GetChatRoomMessageService 
                         msg.getSender().getName()
                 ))
                 .toList();
+
+        return new ArrayList<>(list);
     }
 }
