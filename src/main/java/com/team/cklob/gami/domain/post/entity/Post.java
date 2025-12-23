@@ -2,6 +2,7 @@ package com.team.cklob.gami.domain.post.entity;
 
 import com.team.cklob.gami.domain.member.entity.Member;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -32,7 +33,9 @@ public class Post {
     @Column(nullable = false, length = 30)
     private String title;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Lob
+    @Column(nullable = false, columnDefinition = "LONGTEXT")
+    @Size(max = 10000)
     private String content;
 
     @CreatedDate
@@ -51,7 +54,7 @@ public class Post {
     @Builder.Default
     private List<PostImage> images = new ArrayList<>();
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 500)
     private String summary;
 
     public static Post create(Member member, String title, String content) {
