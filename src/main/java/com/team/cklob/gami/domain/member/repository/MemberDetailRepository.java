@@ -42,8 +42,8 @@ public interface MemberDetailRepository extends JpaRepository<MemberDetail, Long
     );
 
     @Query(value = "SELECT * FROM member_detail md " +
-            "WHERE md.major = :major " +
-            "AND md.generation <= :generation " +
+            "WHERE md.major = :#{#major.name()} " +
+            "AND md.generation < :generation " +
             "ORDER BY RAND() " +
             "LIMIT 1",
             nativeQuery = true)
