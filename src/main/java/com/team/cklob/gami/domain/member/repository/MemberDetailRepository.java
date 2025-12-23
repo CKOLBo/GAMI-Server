@@ -30,10 +30,10 @@ public interface MemberDetailRepository extends JpaRepository<MemberDetail, Long
             Pageable pageable
     );
 
-    @Query("SELECT md FROM MemberDetail md WHERE " +
+    @Query("SELECT md FROM MemberDetail md JOIN md.member m WHERE " +
             "(:major IS NULL OR md.major = :major) AND " +
-            "(:name IS NULL OR md.member.name LIKE %:name%) AND " +
-            "(:generation IS NULL OR md.generation <= :generation)")
+            "(:name IS NULL OR m.name LIKE %:name%) AND " +
+            "(:generation IS NULL OR md.generation < :generation)")
     Page<MemberDetail> findAllWithFiltersIncludingSeniors(
             @Param("major") Major major,
             @Param("name") String name,
