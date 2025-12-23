@@ -29,7 +29,12 @@ public class PostListServiceImpl implements PostListService {
         int page = request.getPage() != null ? request.getPage() : 0;
         int size = request.getSize() != null ? request.getSize() : 10;
 
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
+        Pageable pageable = PageRequest.of(
+                page,
+                size,
+                Sort.by(Sort.Direction.DESC, "createdAt")
+        );
+
         String keyword = request.getKeyword();
 
         Page<Post> result = postQueryRepository.search(keyword, pageable);
@@ -41,7 +46,8 @@ public class PostListServiceImpl implements PostListService {
         return result.map(post ->
                 PostResponse.from(
                         post,
-                        postRepository.countComments(post.getId())
+                        postRepository.countComments(post.getId()),
+                        false
                 )
         );
     }
