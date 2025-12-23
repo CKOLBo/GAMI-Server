@@ -3,6 +3,7 @@ package com.team.cklob.gami.domain.auth.service.impl;
 import com.team.cklob.gami.domain.auth.entity.constant.VerificationType;
 import com.team.cklob.gami.domain.auth.exception.EmailAlreadyExistsException;
 import com.team.cklob.gami.domain.auth.dto.request.SendCodeRequest;
+import com.team.cklob.gami.domain.auth.exception.NotFoundUserException;
 import com.team.cklob.gami.domain.auth.service.SendCodeService;
 import com.team.cklob.gami.domain.auth.exception.TooManyRequestsException;
 import com.team.cklob.gami.domain.member.repository.MemberRepository;
@@ -46,6 +47,10 @@ public class SendCodeServiceImpl implements SendCodeService {
 
         if (request.verificationType() == VerificationType.SIGN_UP) {
             validateDuplicateEmail(request.email());
+        }
+
+        if (request.verificationType() == VerificationType.RESET_PASSWORD && !memberRepository.existsByEmail(request.email())) {
+            throw new NotFoundUserException();
         }
 
         String code = createVerificationCode();
