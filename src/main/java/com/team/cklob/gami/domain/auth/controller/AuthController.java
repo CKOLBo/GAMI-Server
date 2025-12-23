@@ -39,6 +39,7 @@ public class AuthController {
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "인증 코드 발송 성공"),
+            @ApiResponse(responseCode = "401", description = "존재하지 않는 사용자"),
             @ApiResponse(responseCode = "429", description = "요청 횟수 초과", content = @Content)
     })
     @PostMapping("/email/send-code")
