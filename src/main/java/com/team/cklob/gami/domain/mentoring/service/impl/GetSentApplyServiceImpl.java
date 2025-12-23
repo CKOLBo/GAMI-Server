@@ -26,7 +26,7 @@ public class GetSentApplyServiceImpl implements GetSentApplyService {
     public List<GetSentApplyResponse> execute() {
         Member mentee = memberUtil.getCurrentMember();
 
-        List<Apply> applyList = applyRepository.findAllByMentorIdAndApplyStatusWithMentee(mentee.getId(), ApplyStatus.PENDING);
+        List<Apply> applyList = applyRepository.findAllByMenteeIdAndApplyStatusWithMentor(mentee.getId(), ApplyStatus.PENDING);
 
         return applyList.stream()
                 .map(apply -> {
