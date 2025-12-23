@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface MyPostListService {
 
-    List<PostListResponse> getMyPosts(Long memberId);
+    List<PostListResponse> getMyPosts();
 }
