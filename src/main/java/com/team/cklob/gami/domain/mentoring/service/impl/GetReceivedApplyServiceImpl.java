@@ -26,8 +26,7 @@ public class GetReceivedApplyServiceImpl implements GetReceivedApplyService {
     public List<GetReceivedApplyResponse> execute() {
         Member mentor = memberUtil.getCurrentMember();
 
-        List<Apply> applyList = applyRepository.findAllByMenteeIdAndApplyStatusWithMentor(mentor.getId(), ApplyStatus.PENDING);
-
+        List<Apply> applyList = applyRepository.findAllByMentorIdAndApplyStatusWithMentee(mentor.getId(), ApplyStatus.PENDING);
 
         return applyList.stream()
                 .map(apply -> {
