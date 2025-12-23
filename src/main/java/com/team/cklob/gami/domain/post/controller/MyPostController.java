@@ -19,8 +19,7 @@ public class MyPostController {
 
     @GetMapping
     public List<PostListResponse> getMyPosts(
-            @AuthenticationPrincipal Long memberId
     ) {
-        return myPostListService.getMyPosts(memberId);
+        return myPostListService.getMyPosts();
     }
 }
