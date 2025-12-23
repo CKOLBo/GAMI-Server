@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
+import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
 
@@ -36,4 +37,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Modifying
     @Query("update Post p set p.likeCount = p.likeCount - 1 where p.id = :postId and p.likeCount > 0")
     void decreaseLike(@Param("postId") Long postId);
+
+    List<Post> findAllByMemberId(Long memberId);
 }
