@@ -14,6 +14,7 @@ public class PostCreateRequest {
     private String title;
 
     @NotBlank
+    @Size(max = 10000)
     private String content;
 
     private List<PostImageRequest> images;
