@@ -50,7 +50,7 @@ public class SendCodeServiceImpl implements SendCodeService {
         }
 
         if (request.verificationType() == VerificationType.RESET_PASSWORD && !memberRepository.existsByEmail(request.email())) {
-            throw new NotFoundUserException();
+            return;
         }
 
         String code = createVerificationCode();
