@@ -67,7 +67,7 @@ public class ChatRoom {
     }
 
     public boolean isActive() {
-        return roomStatus == RoomStatus.ACTIVE;
+        return this.roomStatus == RoomStatus.ACTIVE && this.endedAt == null;
     }
 
     public void end() {
