@@ -47,7 +47,7 @@ public interface MemberDetailRepository extends JpaRepository<MemberDetail, Long
             "ORDER BY RAND() " +
             "LIMIT 1",
             nativeQuery = true)
-    Optional<MemberDetail> findRandomByMajorAndGenerationLessThanEqual(
+    Optional<MemberDetail> findRandomByMajorAndGenerationLessThan(
             @Param("major") Major major,
             @Param("generation") Integer generation
     );

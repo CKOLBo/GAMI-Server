@@ -28,7 +28,7 @@ public class RandomSearchServiceImpl implements RandomSearchService {
                 .orElseThrow(NotFoundMemberDetailException::new);
 
         MemberDetail mentorDetail = memberDetailRepository
-                .findRandomByMajorAndGenerationLessThanEqual(details.getMajor(), details.getGeneration())
+                .findRandomByMajorAndGenerationLessThan(details.getMajor(), details.getGeneration())
                 .orElseThrow(NotFoundRandomMentorException::new);
 
         return new GetMentorResponse(
