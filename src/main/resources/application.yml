@@ -9,7 +9,7 @@ spring:
     driver-class-name: ${DB_DRIVER_CLASS:com.mysql.cj.jdbc.Driver}
     url: jdbc:${RDB_TYPE:mysql}://${RDB_HOST:localhost}:${RDB_PORT:3306}/${RDB_SCHEMA:gami}?serverTimezone=${DB_TIMEZONE:Asia/Seoul}&characterEncoding=${DB_ENCODING:UTF-8}
     username: ${DB_USERNAME:root}
-    password: ${DB_PASSWORD:1234}
+    password: ${DB_PASSWORD:gkals0403!}
 
   jpa:
     hibernate:
@@ -58,7 +58,7 @@ app:
   env: ${APP_ENV:local}
 
 cors:
-  allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000,https://port-0-gami-server-mj0rdvda8d11523e.sel3.cloudtype.app}
+  allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000,https://port-0-gami-server-mj0rdvda8d11523e.sel3.cloudtype.app, http://localhost:5173, https://cklob-gami.vercel.app}
 
 cloud:
   aws:
