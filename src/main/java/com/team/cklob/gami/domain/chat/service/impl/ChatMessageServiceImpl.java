@@ -47,7 +47,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
         ChatRoom chatRoom = chatRoomRepository.findById(roomId)
                 .orElseThrow(NotFoundChatRoomException::new);
 
-        boolean isMember = chatRoomRepository.existsByRoomIdAndMemberId(sender.getId(), roomId);
+        boolean isMember = chatRoomRepository.existsByRoomIdAndMemberId(roomId, sender.getId());
 
         if (!isMember) {
             throw new NotFoundChatMemberException();
