@@ -29,5 +29,13 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
     Optional<MemberDetail> findOtherMemberInRoom(@Param("roomId") Long roomId,
                                                  @Param("memberId") Long memberId);
 
-    List<ChatRoom> findAllByMentorIdOrMenteeId(Long mentorId, Long menteeId);
+    @Query("""
+    select cr from ChatRoom cr
+    where cr.mentor.id = :memberId or cr.mentee.id = :memberId
+    order by cr.lastMessageAt desc nulls last
+    """)
+    List<ChatRoom> findAllByMentorIdOrMenteeId(
+            @Param("memberId") Long mentorId,
+            @Param("memberId") Long menteeId
+    );
 }
