@@ -35,7 +35,6 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
     order by cr.lastMessageAt desc nulls last
     """)
     List<ChatRoom> findAllByMentorIdOrMenteeId(
-            @Param("memberId") Long mentorId,
-            @Param("memberId") Long menteeId
+            @Param("memberId") Long memberId
     );
 }
