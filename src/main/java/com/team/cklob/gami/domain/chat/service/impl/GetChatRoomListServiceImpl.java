@@ -31,7 +31,7 @@ public class GetChatRoomListServiceImpl implements GetChatRoomListService {
         Member member = memberUtil.getCurrentMember();
 
         List<ChatRoom> chatRoomList = chatRoomRepository
-                .findAllByMentorIdOrMenteeId(member.getId(), member.getId());
+                .findAllByMentorIdOrMenteeId(member.getId());
 
         List<Long> otherMemberIds = chatRoomList.stream()
                 .map(chatRoom -> {
