@@ -47,6 +47,9 @@ public class ChatRoom {
     @Column(name = "last_message", nullable = false)
     private String lastMessage;
 
+    @Column(name = "last_message_at")
+    private LocalDateTime lastMessageAt;
+
     @CreatedDate
     @Column(name = "created_at", updatable = false, nullable = false)
     private LocalDateTime createdAt;
@@ -103,7 +106,8 @@ public class ChatRoom {
                 || member.getId().equals(mentee.getId());
     }
 
-    public void updateLastMessage(String message) {
+    public void updateLastMessage(String message, LocalDateTime lastMessageAt) {
         this.lastMessage = message;
+        this.lastMessageAt = lastMessageAt;
     }
 }
