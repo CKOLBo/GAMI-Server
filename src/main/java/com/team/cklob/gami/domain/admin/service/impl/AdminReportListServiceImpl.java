@@ -18,7 +18,7 @@ public class AdminReportListServiceImpl implements AdminReportListService {
 
     @Override
     public List<AdminReportResponse> getReports() {
-        return reportRepository.findAll()
+        return reportRepository.findAllWithReporterAndPost()
                 .stream()
                 .map(AdminReportResponse::from)
                 .toList();
