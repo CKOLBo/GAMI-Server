@@ -14,8 +14,10 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
 
     @Query("SELECT CASE WHEN COUNT(cr) > 0 THEN true ELSE false END FROM ChatRoom cr " +
             "WHERE cr.id = :roomId AND (cr.mentor.id = :memberId OR cr.mentee.id = :memberId)")
-    boolean existsByRoomIdAndMemberId(@Param("memberId") Long memberId, @Param("roomId") Long roomId);
-
+    boolean existsByRoomIdAndMemberId(
+            @Param("roomId") Long roomId,      // 순서 변경!
+            @Param("memberId") Long memberId
+    );
     @Query("""
     select md
     from ChatRoom cr
