@@ -44,7 +44,7 @@ public class GetChatRoomMessageServiceImpl implements GetChatRoomMessageService 
         ChatRoom chatRoom = chatRoomRepository.findById(roomId)
                 .orElseThrow(NotFoundChatRoomException::new);
 
-        if (!chatRoomRepository.existsByRoomIdAndMemberId(currentMember.getId(), roomId)) {
+        if (!chatRoomRepository.existsByRoomIdAndMemberId(roomId, currentMember.getId())) {
             throw new NotFoundChatMemberException();
         }
 
