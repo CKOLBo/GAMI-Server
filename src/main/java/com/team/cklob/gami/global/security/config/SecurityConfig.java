@@ -123,6 +123,7 @@ public class SecurityConfig {
 
                                 // WEBSOCKET
                                 .requestMatchers("/ws/**").permitAll()
+                                .requestMatchers("/ws-stomp/**").permitAll()
                                 .anyRequest().denyAll()
                 )
 
