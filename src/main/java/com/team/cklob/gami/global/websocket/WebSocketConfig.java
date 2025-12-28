@@ -23,6 +23,14 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
+        registry.addEndpoint("/ws-stomp")
+                .setAllowedOrigins(
+                        "http://localhost:8080",
+                        "http://localhost:3000",
+                        "https://port-0-gami-server-mj0rdvda8d11523e.sel3.cloudtype.app",
+                        "http://localhost:5173",
+                        "https://cklob-gami.vercel.app");
+
         registry.addEndpoint("/ws")
                 .setAllowedOrigins(
                         "http://localhost:8080",
