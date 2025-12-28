@@ -1,6 +1,7 @@
 package com.team.cklob.gami.domain.chat.service.impl;
 
 import com.team.cklob.gami.domain.chat.entity.ChatRoom;
+import com.team.cklob.gami.domain.chat.entity.constant.RoomStatus;
 import com.team.cklob.gami.domain.chat.dto.response.GetChatRoomListResponse;
 import com.team.cklob.gami.domain.chat.repository.ChatRoomRepository;
 import com.team.cklob.gami.domain.chat.service.GetChatRoomListService;
@@ -31,7 +32,11 @@ public class GetChatRoomListServiceImpl implements GetChatRoomListService {
         Member member = memberUtil.getCurrentMember();
 
         List<ChatRoom> chatRoomList = chatRoomRepository
-                .findAllByMentorIdOrMenteeId(member.getId());
+                .findAllByMentorIdOrMenteeId(member.getId())
+                .stream()
+                .filter(chatRoom -> chatRoom.getRoomStatus() == RoomStatus.ACTIVE)
+                .filter(chatRoom -> !chatRoom.hasLeft(member))
+                .toList();
 
         List<Long> otherMemberIds = chatRoomList.stream()
                 .map(chatRoom -> {
