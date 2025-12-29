@@ -1,6 +1,7 @@
 package com.team.cklob.gami.domain.chat.repository;
 
 import com.team.cklob.gami.domain.chat.entity.ChatRoom;
+import com.team.cklob.gami.domain.chat.entity.constant.RoomStatus;
 import com.team.cklob.gami.domain.member.entity.MemberDetail;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
-    boolean existsByMenteeIdAndMentorId(Long menteeId, Long mentorId);
+    boolean existsByMenteeIdAndMentorIdAndRoomStatus(Long menteeId, Long mentorId, RoomStatus roomStatus);
 
     @Query("SELECT CASE WHEN COUNT(cr) > 0 THEN true ELSE false END FROM ChatRoom cr " +
             "WHERE cr.id = :roomId AND (cr.mentor.id = :memberId OR cr.mentee.id = :memberId)")

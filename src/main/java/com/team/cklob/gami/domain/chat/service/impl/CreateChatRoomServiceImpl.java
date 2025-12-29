@@ -29,7 +29,7 @@ public class CreateChatRoomServiceImpl implements CreateChatRoomService {
     @Transactional
     public void execute(Long applyId, Long menteeId, Long mentorId) {
 
-        if (chatRoomRepository.existsByMenteeIdAndMentorId(menteeId, mentorId)) {
+        if (chatRoomRepository.existsByMenteeIdAndMentorIdAndRoomStatus(menteeId, mentorId, RoomStatus.ACTIVE)) {
             throw new AlreadyExistChatRoomException();
         }
         Apply apply = applyRepository.findById(applyId)
