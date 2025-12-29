@@ -41,7 +41,7 @@ public class MentoringApplyServiceImpl implements MentoringApplyService {
             throw new SelfApplyNotAllowedException();
         }
 
-        if (applyRepository.existsByMenteeIdAndMentorIdAndApplyStatusIn(mentee.getId(), mentor.getId(), List.of(ApplyStatus.PENDING, ApplyStatus.ACCEPTED))) {
+        if (applyRepository.existsByMenteeIdAndMentorIdAndApplyStatus(mentee.getId(), mentor.getId(), ApplyStatus.PENDING)) {
             throw new AlreadyRegisteredMentorException();
         }
 
