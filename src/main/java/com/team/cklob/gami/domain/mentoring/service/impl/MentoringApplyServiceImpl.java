@@ -1,5 +1,6 @@
 package com.team.cklob.gami.domain.mentoring.service.impl;
 
+import com.team.cklob.gami.domain.chat.entity.constant.RoomStatus;
 import com.team.cklob.gami.domain.chat.exception.AlreadyExistChatRoomException;
 import com.team.cklob.gami.domain.chat.repository.ChatRoomRepository;
 import com.team.cklob.gami.domain.member.entity.Member;
@@ -40,11 +41,11 @@ public class MentoringApplyServiceImpl implements MentoringApplyService {
             throw new SelfApplyNotAllowedException();
         }
 
-        if (applyRepository.existsByMenteeIdAndMentorIdAndApplyStatusIn(mentee.getId(), mentor.getId(), List.of(ApplyStatus.PENDING, ApplyStatus.ACCEPTED))) {
+        if (applyRepository.existsByMenteeIdAndMentorIdAndApplyStatus(mentee.getId(), mentor.getId(), ApplyStatus.PENDING)) {
             throw new AlreadyRegisteredMentorException();
         }
 
-        if (chatRoomRepository.existsByMenteeIdAndMentorId(mentee.getId(), mentorId)) {
+        if (chatRoomRepository.existsByMenteeIdAndMentorIdAndRoomStatus(mentee.getId(), mentorId, RoomStatus.ACTIVE)) {
             throw new AlreadyExistChatRoomException();
         }
 

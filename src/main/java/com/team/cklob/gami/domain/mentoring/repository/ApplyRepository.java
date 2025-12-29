@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ApplyRepository extends JpaRepository<Apply, Long> {
 
-    Boolean existsByMenteeIdAndMentorIdAndApplyStatusIn(Long menteeId, Long mentorId, List<ApplyStatus> applyStatus);
+    Boolean existsByMenteeIdAndMentorIdAndApplyStatus(Long menteeId, Long mentorId, ApplyStatus applyStatus);
 
     @Query("SELECT a FROM Apply a JOIN FETCH a.mentor WHERE a.mentee.id = :menteeId AND a.applyStatus = :applyStatus ORDER BY a.createdAt DESC")
     List<Apply> findAllByMenteeIdAndApplyStatusWithMentor(@Param("menteeId") Long menteeId, @Param("applyStatus") ApplyStatus applyStatus);

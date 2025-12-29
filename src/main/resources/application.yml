@@ -58,7 +58,7 @@ app:
   env: ${APP_ENV:local}
 
 cors:
-  allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000,https://port-0-gami-server-mj0rdvda8d11523e.sel3.cloudtype.app, http://localhost:5173, https://cklob-gami.vercel.app}
+  allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000,https://port-0-gami-server-mj0rdvda8d11523e.sel3.cloudtype.app,http://localhost:5173,https://cklob-gami.vercel.app}
 
 cloud:
   aws:
