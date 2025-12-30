@@ -39,4 +39,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     void decreaseLike(@Param("postId") Long postId);
 
     List<Post> findAllByMemberId(Long memberId);
+
+    @Modifying(clearAutomatically = true, flushAutomatically = true)
+    @Query(value = "delete from `like` where post_id = :postId", nativeQuery = true)
+    void deleteAllFromLikeTableByPostId(@Param("postId") Long postId);
 }
